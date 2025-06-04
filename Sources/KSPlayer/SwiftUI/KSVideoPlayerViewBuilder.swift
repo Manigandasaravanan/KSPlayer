@@ -29,14 +29,14 @@ enum KSVideoPlayerViewBuilder {
         }
     }
 
-    @MainActor
-    static func contentModeButton(config: KSVideoPlayer.Coordinator) -> some View {
-        Button {
-            config.isScaleAspectFill.toggle()
-        } label: {
-            Image(systemName: config.isScaleAspectFill ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward")
-        }
-    }
+//    @MainActor
+//    static func contentModeButton(config: KSVideoPlayer.Coordinator) -> some View {
+//        Button {
+//            config.isScaleAspectFill.toggle()
+//        } label: {
+//            Image(systemName: config.isScaleAspectFill ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward")
+//        }
+//    }
 
     @MainActor
     static func subtitleButton(config: KSVideoPlayer.Coordinator) -> some View {

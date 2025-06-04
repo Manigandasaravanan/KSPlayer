@@ -425,7 +425,7 @@ struct VideoControllerView: View {
                 }
                 muteButton
                 #if !os(xrOS)
-                contentModeButton
+//                contentModeButton
                 subtitleButton
                 #endif
             }
@@ -471,9 +471,9 @@ struct VideoControllerView: View {
         #endif
     }
 
-    private var contentModeButton: some View {
+//    private var contentModeButton: some View {
 //        KSVideoPlayerViewBuilder.contentModeButton(config: config)
-    }
+//    }
 
     private func audioButton(audioTracks: [MediaPlayerTrack]) -> some View {
         MenuView(selection: Binding {
