@@ -382,12 +382,12 @@ struct VideoControllerView: View {
                             config.playerLayer?.play()
                         }
                     } label: {
-                        Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.circle.fill" : "play.circle.fill"))
+                        Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
                     }
                     .frame(width: 56)
-                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                        audioButton(audioTracks: audioTracks)
-                    }
+//                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+//                        audioButton(audioTracks: audioTracks)
+//                    }
                     muteButton
                         .frame(width: 56)
 //                    contentModeButton
@@ -407,8 +407,11 @@ struct VideoControllerView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Image(systemName: "x.circle.fill")
+                    Image(systemName: "arrow.backward")
                 }
+                Spacer()
+                KSVideoPlayerViewBuilder.titleView(title: title, config: config)
+                Spacer()
                 #if !os(tvOS)
                 if config.playerLayer?.player.allowsExternalPlayback == true {
                     AirPlayView().fixedSize()
@@ -433,13 +436,13 @@ struct VideoControllerView: View {
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
-            HStack {
-                KSVideoPlayerViewBuilder.titleView(title: title, config: config)
-                Spacer()
-//                playbackRateButton
-                pipButton
-//                infoButton
-            }
+//            HStack {
+//
+//                Spacer()
+////                playbackRateButton
+////                pipButton
+////                infoButton
+//            }
             #endif
             #endif
         }
@@ -503,13 +506,13 @@ struct VideoControllerView: View {
 //        KSVideoPlayerViewBuilder.playbackRateButton(playbackRate: $config.playbackRate)
 //    }
 
-    private var pipButton: some View {
-        Button {
-            config.playerLayer?.isPipActive.toggle()
-        } label: {
-            Image(systemName: "rectangle.on.rectangle.circle.fill")
-        }
-    }
+//    private var pipButton: some View {
+//        Button {
+//            config.playerLayer?.isPipActive.toggle()
+//        } label: {
+//            Image(systemName: "rectangle.on.rectangle.circle.fill")
+//        }
+//    }
 
 //    private var infoButton: some View {
 //        KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)

@@ -111,7 +111,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "play.fill"
         #else
-        "play.circle.fill"
+        "play.fill"
         #endif
     }
 
@@ -119,7 +119,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "pause.fill"
         #else
-        "pause.circle.fill"
+        "pause.fill"
         #endif
     }
 
