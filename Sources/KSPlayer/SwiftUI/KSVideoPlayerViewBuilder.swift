@@ -50,12 +50,12 @@ enum KSVideoPlayerViewBuilder {
                 config.playerLayer?.player.select(track: info)
             }
         }) {
-            Text("Off").tag(nil as String?)
+            Text("Disable").tag(nil as String?)
             ForEach(config.subtitleModel.subtitleInfos, id: \.subtitleID) { track in
-                Text(track.name).tag(track.subtitleID as String?)
+                Text(track.name)
             }
         } label: {
-            Image(systemName: "text.bubble.fill")
+            Image("close-caption")
         }
     }
 

@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "close-caption.png",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
