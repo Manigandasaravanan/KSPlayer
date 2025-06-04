@@ -183,14 +183,102 @@ public class ShooterSubtitleDataSouce: FileURLSubtitleDataSouce {
             let delay = TimeInterval(sub["Delay"] as? Int ?? 0) / 1000.0
             return filesDic?.compactMap { dic in
                 if let string = dic["Link"], let url = URL(string: string) {
-                    let info = URLSubtitleInfo(subtitleID: string, name: "", url: url)
+                    let fileName = URL(string: string)?.lastPathComponent ?? ""
+                    
+                    // Infer language from filename — crude but practical
+                    let language = languageDescription(from: fileName)
+                    
+                    let displayName = "Track \(trackIndex) - [\(language)]"
+                    
+                    let info = URLSubtitleInfo(subtitleID: string, name: displayName, url: url)
                     info.delay = delay
+                    trackIndex += 1
                     return info
                 }
                 return nil
             } ?? [URLSubtitleInfo]()
         }
     }
+    
+    private func languageDescription(from filename: String) -> String {
+        let lowercased = filename.lowercased()
+
+        let languageMap: [String: String] = [
+            "eng": "English",
+            "en": "English",
+            "english": "English",
+            "sdh": "English - SDH",
+            "spa": "Spanish",
+            "es": "Spanish",
+            "spanish": "Spanish",
+            "por": "Portuguese",
+            "pt": "Portuguese",
+            "portuguese": "Portuguese",
+            "fre": "French",
+            "fr": "French",
+            "french": "French",
+            "ger": "German",
+            "de": "German",
+            "german": "German",
+            "ita": "Italian",
+            "it": "Italian",
+            "italian": "Italian",
+            "rus": "Russian",
+            "ru": "Russian",
+            "russian": "Russian",
+            "jpn": "Japanese",
+            "ja": "Japanese",
+            "japanese": "Japanese",
+            "kor": "Korean",
+            "ko": "Korean",
+            "korean": "Korean",
+            "chi": "Chinese",
+            "zh": "Chinese",
+            "chs": "Chinese (Simplified)",
+            "cht": "Chinese (Traditional)",
+            "hin": "Hindi",
+            "hi": "Hindi",
+            "arabic": "Arabic",
+            "ara": "Arabic",
+            "ar": "Arabic",
+            "tur": "Turkish",
+            "tr": "Turkish",
+            "vie": "Vietnamese",
+            "vi": "Vietnamese",
+            "dutch": "Dutch",
+            "nld": "Dutch",
+            "nl": "Dutch",
+            "thai": "Thai",
+            "th": "Thai",
+            "tam": "Tamil",
+            "ta": "Tamil",
+            "tel": "Telugu",
+            "te": "Telugu",
+            "mal": "Malayalam",
+            "ml": "Malayalam",
+            "kan": "Kannada",
+            "kn": "Kannada",
+            "bengali": "Bengali",
+            "bn": "Bengali",
+            "mar": "Marathi",
+            "mr": "Marathi",
+            "gujarati": "Gujarati",
+            "gu": "Gujarati",
+            "punjabi": "Punjabi",
+            "pa": "Punjabi",
+            "urdu": "Urdu",
+            "ur": "Urdu"
+        ]
+
+        for (key, value) in languageMap {
+            if lowercased.contains(key) {
+                return value
+            }
+        }
+
+        return "Unknown"
+    }
+
 }
 
 public class AssrtSubtitleDataSouce: SearchSubtitleDataSouce {
