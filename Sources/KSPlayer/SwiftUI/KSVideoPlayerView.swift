@@ -383,6 +383,8 @@ struct VideoControllerView: View {
                         }
                     } label: {
                         Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
+                            .resizable()
+                            .frame(width: 36, height: 36)
                     }
                     .frame(width: 56)
 //                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
@@ -409,7 +411,7 @@ struct VideoControllerView: View {
                 } label: {
                     Image(systemName: "arrow.backward")
                         .resizable()
-                        .frame(width: 36, height: 36)
+                        .frame(width: 24, height: 24)
                 }
                 Spacer()
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
