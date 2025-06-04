@@ -414,10 +414,10 @@ struct VideoControllerView: View {
                 }) {
                     Image(systemName: "arrow.backward")
                         .foregroundColor(.white)
-                        .imageScale(.medium)
+                        .imageScale(.small)
                         .padding()
                 }
-                .padding(.leading, 16)
+                .padding(.leading, 8)
                 Spacer()
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
                 Spacer()
