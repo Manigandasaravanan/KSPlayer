@@ -404,11 +404,6 @@ struct VideoControllerView: View {
             #else
             HStack {
                 #if !os(xrOS)
-//                Button {
-//                    dismiss()
-//                } label: {
-//                    Image(systemName: "arrow.backward")
-//                }
                 Button(action: {
                     dismiss()
                 }) {
@@ -417,7 +412,6 @@ struct VideoControllerView: View {
                         .imageScale(.small)
                         .padding()
                 }
-                .padding(.leading, 8)
                 Spacer()
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
                 Spacer()
