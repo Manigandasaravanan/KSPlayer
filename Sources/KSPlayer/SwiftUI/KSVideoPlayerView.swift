@@ -404,11 +404,20 @@ struct VideoControllerView: View {
             #else
             HStack {
                 #if !os(xrOS)
-                Button {
+//                Button {
+//                    dismiss()
+//                } label: {
+//                    Image(systemName: "arrow.backward")
+//                }
+                Button(action: {
                     dismiss()
-                } label: {
+                }) {
                     Image(systemName: "arrow.backward")
+                        .foregroundColor(.white)
+                        .imageScale(.medium)
+                        .padding()
                 }
+                .padding(.leading, 16)
                 Spacer()
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
                 Spacer()
