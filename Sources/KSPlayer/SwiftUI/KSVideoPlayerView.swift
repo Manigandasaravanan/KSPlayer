@@ -383,8 +383,6 @@ struct VideoControllerView: View {
                         }
                     } label: {
                         Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
-                            .resizable()
-                            .frame(width: 36, height: 36)
                     }
                     .frame(width: 56)
 //                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
@@ -411,25 +409,26 @@ struct VideoControllerView: View {
                 } label: {
                     Image(systemName: "arrow.backward")
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .frame(width: 18, height: 18)
                 }
                 Spacer()
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
                 Spacer()
                 #if !os(tvOS)
-                if config.playerLayer?.player.allowsExternalPlayback == true {
-                    AirPlayView().fixedSize()
-                }
+//                if config.playerLayer?.player.allowsExternalPlayback == true {
+                    
+//                }
                 #endif
                 #endif
                 Spacer()
-                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                    audioButton(audioTracks: audioTracks)
-                    #if os(xrOS)
-                        .aspectRatio(1, contentMode: .fit)
-                        .glassBackgroundEffect()
-                    #endif
-                }
+                AirPlayView().fixedSize()
+//                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+//                    audioButton(audioTracks: audioTracks)
+//                    #if os(xrOS)
+//                        .aspectRatio(1, contentMode: .fit)
+//                        .glassBackgroundEffect()
+//                    #endif
+//                }
                 muteButton
                 #if !os(xrOS)
 //                contentModeButton
@@ -482,25 +481,25 @@ struct VideoControllerView: View {
 //        KSVideoPlayerViewBuilder.contentModeButton(config: config)
 //    }
 
-    private func audioButton(audioTracks: [MediaPlayerTrack]) -> some View {
-        MenuView(selection: Binding {
-            audioTracks.first { $0.isEnabled }?.trackID
-        } set: { value in
-            if let track = audioTracks.first(where: { $0.trackID == value }) {
-                config.playerLayer?.player.select(track: track)
-            }
-        }) {
-            ForEach(audioTracks, id: \.trackID) { track in
-                Text(track.description).tag(track.trackID as Int32?)
-            }
-        } label: {
-            Image(systemName: "waveform.circle.fill")
-            #if os(xrOS)
-                .padding()
-                .clipShape(Circle())
-            #endif
-        }
-    }
+//    private func audioButton(audioTracks: [MediaPlayerTrack]) -> some View {
+//        MenuView(selection: Binding {
+//            audioTracks.first { $0.isEnabled }?.trackID
+//        } set: { value in
+//            if let track = audioTracks.first(where: { $0.trackID == value }) {
+//                config.playerLayer?.player.select(track: track)
+//            }
+//        }) {
+//            ForEach(audioTracks, id: \.trackID) { track in
+//                Text(track.description).tag(track.trackID as Int32?)
+//            }
+//        } label: {
+//            Image(systemName: "waveform.circle.fill")
+//            #if os(xrOS)
+//                .padding()
+//                .clipShape(Circle())
+//            #endif
+//        }
+//    }
 
     private var subtitleButton: some View {
         KSVideoPlayerViewBuilder.subtitleButton(config: config)
