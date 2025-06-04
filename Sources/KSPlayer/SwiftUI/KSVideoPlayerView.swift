@@ -408,10 +408,7 @@ struct VideoControllerView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "arrow.backward")
-                        .resizable()
-                        .frame(width: 18, height: 18)
                 }
-                .frame(width: 56, height: 56)
                 Spacer()
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
                 Spacer()
