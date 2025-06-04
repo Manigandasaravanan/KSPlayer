@@ -177,6 +177,7 @@ public class ShooterSubtitleDataSouce: FileURLSubtitleDataSouce {
         guard let json = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] else {
             return
         }
+        var trackIndex = 1
         infos = json.flatMap { sub in
             let filesDic = sub["Files"] as? [[String: String]]
 //                let desc = sub["Desc"] as? String ?? ""
