@@ -176,7 +176,7 @@ public class PlayerToolBar: UIStackView {
         srtButton.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
         if #available(tvOS 14.0, *) {
-            pipButton.isHidden = !AVPictureInPictureController.isPictureInPictureSupported()
+            pipButton.isHidden = true
         }
         #if os(tvOS)
         srtButton.fillImage()
