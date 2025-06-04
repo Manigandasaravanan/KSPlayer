@@ -55,7 +55,7 @@ enum KSVideoPlayerViewBuilder {
                 Text(track.name)
             }
         } label: {
-            Image("close-caption")
+            Image(systemName: "captions.bubble")
                 .resizable()
                 .frame(width: 24, height: 24)
         }
