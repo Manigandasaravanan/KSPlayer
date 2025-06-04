@@ -283,7 +283,7 @@ public struct KSVideoPlayerView: View {
 
     private func ornamentControlsView(playerWidth _: Double) -> some View {
         HStack {
-            KSVideoPlayerViewBuilder.playbackControlView(config: playerCoordinator, spacing: 16)
+//            KSVideoPlayerViewBuilder.playbackControlView(config: playerCoordinator, spacing: 16)
             Spacer()
             VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel, timeFont: .title3.monospacedDigit())
             Spacer()
@@ -393,7 +393,7 @@ struct VideoControllerView: View {
 //                    contentModeButton
 //                        .frame(width: 56)
                     subtitleButton
-                    playbackRateButton
+//                    playbackRateButton
 //                    pipButton
 //                        .frame(width: 56)
 //                    infoButton
@@ -436,7 +436,7 @@ struct VideoControllerView: View {
             HStack {
                 KSVideoPlayerViewBuilder.titleView(title: title, config: config)
                 Spacer()
-                playbackRateButton
+//                playbackRateButton
                 pipButton
 //                infoButton
             }
@@ -499,9 +499,9 @@ struct VideoControllerView: View {
         KSVideoPlayerViewBuilder.subtitleButton(config: config)
     }
 
-    private var playbackRateButton: some View {
-        KSVideoPlayerViewBuilder.playbackRateButton(playbackRate: $config.playbackRate)
-    }
+//    private var playbackRateButton: some View {
+//        KSVideoPlayerViewBuilder.playbackRateButton(playbackRate: $config.playbackRate)
+//    }
 
     private var pipButton: some View {
         Button {

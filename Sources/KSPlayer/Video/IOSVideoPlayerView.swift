@@ -187,7 +187,7 @@ open class IOSVideoPlayerView: VideoPlayerView {
         } else {
             topMaskView.isHidden = KSOptions.topBarShowInCase != .always
         }
-        toolBar.playbackRateButton.isHidden = false
+        toolBar.playbackRateButton.isHidden = true
         toolBar.srtButton.isHidden = srtControl.subtitleInfos.isEmpty
         if UIDevice.current.userInterfaceIdiom == .phone {
             if isLandscape {
@@ -201,7 +201,7 @@ open class IOSVideoPlayerView: VideoPlayerView {
                     landscapeButton.isHidden = false
                 }
             }
-            toolBar.playbackRateButton.isHidden = !isLandscape
+            toolBar.playbackRateButton.isHidden = true
         } else {
             landscapeButton.isHidden = true
         }

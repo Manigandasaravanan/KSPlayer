@@ -507,14 +507,14 @@ extension VideoPlayerView {
                 self.playerLayer?.player.select(track: value)
             }
         }
-        toolBar.playbackRateButton.setMenu(title: NSLocalizedString("speed", comment: ""), current: playerLayer?.player.playbackRate ?? 1, list: [0.75, 1.0, 1.25, 1.5, 2.0]) { value in
-            "\(value) x"
-        } completition: { [weak self] value in
-            guard let self else { return }
-            if let value {
-                self.playerLayer?.player.playbackRate = value
-            }
-        }
+//        toolBar.playbackRateButton.setMenu(title: NSLocalizedString("speed", comment: ""), current: playerLayer?.player.playbackRate ?? 1, list: [0.75, 1.0, 1.25, 1.5, 2.0]) { value in
+//            "\(value) x"
+//        } completition: { [weak self] value in
+//            guard let self else { return }
+//            if let value {
+//                self.playerLayer?.player.playbackRate = value
+//            }
+//        }
         toolBar.srtButton.setMenu(title: NSLocalizedString("subtitle", comment: ""), current: srtControl.selectedSubtitleInfo, list: srtControl.subtitleInfos, addDisabled: true) { value in
             value.name
         } completition: { [weak self] value in
