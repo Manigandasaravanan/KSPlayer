@@ -288,7 +288,7 @@ public struct KSVideoPlayerView: View {
             VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel, timeFont: .title3.monospacedDigit())
             Spacer()
             Group {
-                KSVideoPlayerViewBuilder.contentModeButton(config: playerCoordinator)
+//                KSVideoPlayerViewBuilder.contentModeButton(config: playerCoordinator)
                 KSVideoPlayerViewBuilder.subtitleButton(config: playerCoordinator)
 //                KSVideoPlayerViewBuilder.playbackRateButton(playbackRate: $playerCoordinator.playbackRate)
 //                KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
@@ -390,14 +390,14 @@ struct VideoControllerView: View {
                     }
                     muteButton
                         .frame(width: 56)
-                    contentModeButton
-                        .frame(width: 56)
+//                    contentModeButton
+//                        .frame(width: 56)
                     subtitleButton
                     playbackRateButton
-                    pipButton
-                        .frame(width: 56)
-                    infoButton
-                        .frame(width: 56)
+//                    pipButton
+//                        .frame(width: 56)
+//                    infoButton
+//                        .frame(width: 56)
                 }
                 .font(.caption)
             }
@@ -472,7 +472,7 @@ struct VideoControllerView: View {
     }
 
     private var contentModeButton: some View {
-        KSVideoPlayerViewBuilder.contentModeButton(config: config)
+//        KSVideoPlayerViewBuilder.contentModeButton(config: config)
     }
 
     private func audioButton(audioTracks: [MediaPlayerTrack]) -> some View {
@@ -512,7 +512,7 @@ struct VideoControllerView: View {
     }
 
     private var infoButton: some View {
-        KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
+//        KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
     }
 }
 
