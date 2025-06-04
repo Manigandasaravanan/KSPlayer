@@ -16,6 +16,7 @@ public struct AirPlayView: UIViewRepresentable {
     public typealias UIViewType = AVRoutePickerView
     public func makeUIView(context _: Context) -> UIViewType {
         let routePickerView = AVRoutePickerView()
+        routePickerView.prioritizesVideoDevices = true
         routePickerView.tintColor = .white
         return routePickerView
     }
