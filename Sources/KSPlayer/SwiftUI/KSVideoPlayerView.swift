@@ -438,7 +438,7 @@ struct VideoControllerView: View {
                 Spacer()
                 playbackRateButton
                 pipButton
-                infoButton
+//                infoButton
             }
             #endif
             #endif
@@ -511,9 +511,9 @@ struct VideoControllerView: View {
         }
     }
 
-    private var infoButton: some View {
+//    private var infoButton: some View {
 //        KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
-    }
+//    }
 }
 
 @available(iOS 15, tvOS 16, macOS 12, *)
