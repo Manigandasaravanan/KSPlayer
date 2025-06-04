@@ -75,8 +75,9 @@ enum KSVideoPlayerViewBuilder {
     @MainActor
     static func titleView(title: String, config: KSVideoPlayer.Coordinator) -> some View {
         HStack {
+            Spacer()
             Text(title)
-                .font(.title3)
+                .font(.subheadline)
             ProgressView()
                 .opacity(config.state == .buffering ? 1 : 0)
         }
