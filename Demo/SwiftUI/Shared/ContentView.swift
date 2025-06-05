@@ -31,7 +31,7 @@ struct ContentView: View {
     var body: some View {
         initialView
             .preferredColorScheme(.dark)
-            .background(Color.black)
+            .background(Color.red)
             .sheet(isPresented: $appModel.openURLImport) {
                 URLImportView()
             }
