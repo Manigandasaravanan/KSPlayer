@@ -570,6 +570,7 @@ struct VideoTimeShowView: View {
         if config.playerLayer?.player.seekable ?? false {
             HStack {
                 Text(model.currentTime.toString(for: .minOrHour)).font(timeFont ?? .caption2.monospacedDigit())
+                    .foregroundStyle(Color.white)
                 Slider(value: Binding {
                     Float(model.currentTime)
                 } set: { newValue, _ in
@@ -586,10 +587,12 @@ struct VideoTimeShowView: View {
                     .tint(.white.opacity(0.8))
                 #endif
                 Text((model.totalTime).toString(for: .minOrHour)).font(timeFont ?? .caption2.monospacedDigit())
+                    .foregroundStyle(Color.white)
             }
             .font(.system(.title2))
         } else {
             Text("Live Streaming")
+                .foregroundStyle(Color.white)
         }
     }
 }
