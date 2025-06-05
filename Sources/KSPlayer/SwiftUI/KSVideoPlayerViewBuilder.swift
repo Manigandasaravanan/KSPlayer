@@ -80,6 +80,7 @@ enum KSVideoPlayerViewBuilder {
             Spacer()
             Text(title)
                 .font(.subheadline)
+                .foregroundStyle(Color.white)
             ProgressView()
                 .opacity(config.state == .buffering ? 1 : 0)
         }
