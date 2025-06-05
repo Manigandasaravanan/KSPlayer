@@ -591,8 +591,8 @@ struct VideoTimeShowView: View {
             }
             .font(.system(.title2))
         } else {
-            Text("Live Streaming")
-                .foregroundStyle(Color.white)
+//            Text("Loading..")
+//                .foregroundStyle(Color.white)
         }
     }
 }
