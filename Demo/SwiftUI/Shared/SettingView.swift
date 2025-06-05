@@ -29,7 +29,7 @@ struct SettingView: View {
                 }
             }
         }
-        .preferredColorScheme(.light)
+        .preferredColorScheme(.dark)
         .background(Color.black)
     }
 }
