@@ -437,10 +437,10 @@ struct VideoControllerView: View {
                 subtitleButton
                 #endif
             }
-            AirPlayView().fixedSize()
             Spacer()
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
+            AirPlayView().fixedSize()
             Spacer()
 //            HStack {
 //
