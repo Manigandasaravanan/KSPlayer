@@ -130,9 +130,9 @@ public protocol SubtitleInfo: KSSubtitleProtocol, AnyObject, Hashable, Identifia
     var subtitleID: String { get }
     var name: String { get }
     var delay: TimeInterval { get set }
-    var userInfo: NSMutableDictionary? { get set }
-    var subtitleDataSouce: SubtitleDataSouce? { get set }
-    var comment: String? { get }
+//    var userInfo: NSMutableDictionary? { get set }
+//    var subtitleDataSouce: SubtitleDataSouce? { get set }
+//    var comment: String? { get }
     var isEnabled: Bool { get set }
 }
 
