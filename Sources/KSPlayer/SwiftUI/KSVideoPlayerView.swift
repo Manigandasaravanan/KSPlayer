@@ -423,7 +423,7 @@ struct VideoControllerView: View {
                 #endif
                 #endif
                 Spacer()
-                AirPlayView().fixedSize()
+                
 //                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
 //                    audioButton(audioTracks: audioTracks)
 //                    #if os(xrOS)
@@ -437,6 +437,7 @@ struct VideoControllerView: View {
                 subtitleButton
                 #endif
             }
+            AirPlayView().fixedSize()
             Spacer()
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
