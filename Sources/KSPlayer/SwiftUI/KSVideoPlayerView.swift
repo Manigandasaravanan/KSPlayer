@@ -8,6 +8,10 @@ import AVFoundation
 import MediaPlayer
 import SwiftUI
 
+public class KSPlayerEventBus {
+    public static var onLoadSubtitleTapped: (() -> Void)? = nil
+}
+
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
 @MainActor
 public struct KSVideoPlayerView: View {
@@ -391,6 +395,7 @@ struct VideoControllerView: View {
 //                    }
                     muteButton
                         .frame(width: 56)
+                    loadSubtitleButton
 //                    contentModeButton
 //                        .frame(width: 56)
                     subtitleButton
@@ -432,15 +437,16 @@ struct VideoControllerView: View {
 //                    #endif
 //                }
                 muteButton
+                loadSubtitleButton
                 #if !os(xrOS)
 //                contentModeButton
                 subtitleButton
                 #endif
             }
+            AirPlayView().fixedSize()
             Spacer()
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
-            AirPlayView().fixedSize()
             Spacer()
 //            HStack {
 //
@@ -459,6 +465,16 @@ struct VideoControllerView: View {
         .sheet(isPresented: $showVideoSetting) {
             VideoSettingView(config: config, subtitleModel: config.subtitleModel, subtitleTitle: title)
         }
+    }
+    
+    private var loadSubtitleButton: some View {
+        Button(action: {
+            KSPlayerEventBus.onLoadSubtitleTapped?()
+        }) {
+            Image(systemName: "captions.bubble.fill")
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal)
     }
 
     private var muteButton: some View {
