@@ -474,8 +474,11 @@ struct VideoControllerView: View {
         Button(action: {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
-            Image(systemName: "captions.bubble.fill")
-                .foregroundColor(.white)
+            HStack(spacing: 0) {
+                Text("Download subtitle").font(Font(SubtitleModel.textFont))
+                Image(systemName: "square.and.arrow.down")
+                    .foregroundColor(.white)
+            }
         }
         .padding(.horizontal)
     }
