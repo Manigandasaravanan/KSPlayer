@@ -437,17 +437,20 @@ struct VideoControllerView: View {
 //                    #endif
 //                }
                 muteButton
-                loadSubtitleButton
+                
                 #if !os(xrOS)
 //                contentModeButton
                 subtitleButton
                 #endif
             }
-            AirPlayView().fixedSize()
             Spacer()
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
+            HStack(spacing: 0) {
+                AirPlayView().fixedSize()
+                loadSubtitleButton
+            }
 //            HStack {
 //
 //                Spacer()
