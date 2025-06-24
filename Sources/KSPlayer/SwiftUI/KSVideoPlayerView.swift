@@ -436,8 +436,8 @@ struct VideoControllerView: View {
 //                        .glassBackgroundEffect()
 //                    #endif
 //                }
+                AirPlayView().fixedSize()
                 muteButton
-                
                 #if !os(xrOS)
 //                contentModeButton
                 subtitleButton
@@ -448,7 +448,7 @@ struct VideoControllerView: View {
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
             HStack(spacing: 0) {
-                AirPlayView().fixedSize()
+                
                 loadSubtitleButton
             }
 //            HStack {
@@ -475,9 +475,9 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Text("Download subtitle").font(Font(SubtitleModel.textFont))
                 Image(systemName: "square.and.arrow.down")
                     .foregroundColor(.white)
+                Text("Download subtitle").font(Font(SubtitleModel.textFont))
             }
         }
         .padding(.horizontal)
