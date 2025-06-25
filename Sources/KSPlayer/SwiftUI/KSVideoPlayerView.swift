@@ -542,9 +542,9 @@ struct VideoControllerView: View {
 //        }
 //    }
 
-//    private var infoButton: some View {
-//        KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
-//    }
+    private var infoButton: some View {
+        KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
+    }
 }
 
 @available(iOS 15, tvOS 16, macOS 12, *)
