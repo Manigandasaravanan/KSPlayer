@@ -293,7 +293,7 @@ public struct KSVideoPlayerView: View {
             VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel, timeFont: .title3.monospacedDigit())
             Spacer()
             Group {
-//                KSVideoPlayerViewBuilder.contentModeButton(config: playerCoordinator)
+                KSVideoPlayerViewBuilder.contentModeButton(config: playerCoordinator)
                 KSVideoPlayerViewBuilder.subtitleButton(config: playerCoordinator)
 //                KSVideoPlayerViewBuilder.playbackRateButton(playbackRate: $playerCoordinator.playbackRate)
                 KSVideoPlayerViewBuilder.infoButton(showVideoSetting: $showVideoSetting)
@@ -439,7 +439,7 @@ struct VideoControllerView: View {
                 AirPlayView().fixedSize()
                 muteButton
                 #if !os(xrOS)
-//                contentModeButton
+                contentModeButton
                 subtitleButton
                 #endif
             }
@@ -451,13 +451,13 @@ struct VideoControllerView: View {
 //                
 //                loadSubtitleButton
 //            }
-            HStack {
+//            HStack {
 
-                Spacer()
+//                Spacer()
 //                playbackRateButton
 //                pipButton
-                infoButton
-            }
+//                infoButton
+//            }
             #endif
             #endif
         }
@@ -502,9 +502,9 @@ struct VideoControllerView: View {
         #endif
     }
 
-//    private var contentModeButton: some View {
-//        KSVideoPlayerViewBuilder.contentModeButton(config: config)
-//    }
+    private var contentModeButton: some View {
+        KSVideoPlayerViewBuilder.contentModeButton(config: config)
+    }
 
 //    private func audioButton(audioTracks: [MediaPlayerTrack]) -> some View {
 //        MenuView(selection: Binding {
