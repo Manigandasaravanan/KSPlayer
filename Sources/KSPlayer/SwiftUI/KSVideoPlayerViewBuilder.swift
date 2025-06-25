@@ -50,34 +50,31 @@ enum KSVideoPlayerViewBuilder {
                 config.playerLayer?.player.select(track: info)
             }
         }) {
-            Text("Disable").tag(nil as String?)
+            Text("Off").tag(nil as String?)
             ForEach(config.subtitleModel.subtitleInfos, id: \.subtitleID) { track in
-                Text(track.name)
+                Text(track.name).tag(track.subtitleID as String?)
             }
         } label: {
-            Image(systemName: "captions.bubble")
-                .resizable()
-                .frame(width: 24, height: 24)
+            Image(systemName: "text.bubble.fill")
         }
     }
 
-//    @MainActor
-//    static func playbackRateButton(playbackRate: Binding<Float>) -> some View {
-//        MenuView(selection: playbackRate) {
-//            ForEach([0.5, 1.0, 1.25, 1.5, 2.0] as [Float]) { value in
-//                // 需要有一个变量text。不然会自动帮忙加很多0
-//                let text = "\(value) x"
-//                Text(text).tag(value)
-//            }
-//        } label: {
-//            Image(systemName: "gauge.with.dots.needle.67percent")
-//        }
-//    }
+    @MainActor
+    static func playbackRateButton(playbackRate: Binding<Float>) -> some View {
+        MenuView(selection: playbackRate) {
+            ForEach([0.5, 1.0, 1.25, 1.5, 2.0] as [Float]) { value in
+                // 需要有一个变量text。不然会自动帮忙加很多0
+                let text = "\(value) x"
+                Text(text).tag(value)
+            }
+        } label: {
+            Image(systemName: "gauge.with.dots.needle.67percent")
+        }
+    }
 
     @MainActor
     static func titleView(title: String, config: KSVideoPlayer.Coordinator) -> some View {
         HStack {
-            Spacer()
             Text(title)
                 .font(.subheadline)
                 .foregroundStyle(Color.white)
@@ -115,7 +112,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "play.fill"
         #else
-        "play.fill"
+        "play.circle.fill"
         #endif
     }
 
@@ -123,7 +120,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "pause.fill"
         #else
-        "pause.fill"
+        "pause.circle.fill"
         #endif
     }
 
