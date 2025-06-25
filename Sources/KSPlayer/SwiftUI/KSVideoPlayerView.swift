@@ -395,7 +395,7 @@ struct VideoControllerView: View {
 //                    }
                     muteButton
                         .frame(width: 56)
-                    loadSubtitleButton
+//                    loadSubtitleButton
 //                    contentModeButton
 //                        .frame(width: 56)
                     subtitleButton
@@ -447,10 +447,10 @@ struct VideoControllerView: View {
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
-            HStack(spacing: 0) {
-                
-                loadSubtitleButton
-            }
+//            HStack(spacing: 0) {
+//                
+//                loadSubtitleButton
+//            }
 //            HStack {
 //
 //                Spacer()
