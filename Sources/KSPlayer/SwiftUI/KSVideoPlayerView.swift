@@ -451,13 +451,13 @@ struct VideoControllerView: View {
 //                
 //                loadSubtitleButton
 //            }
-//            HStack {
-//
-//                Spacer()
-////                playbackRateButton
-////                pipButton
-////                infoButton
-//            }
+            HStack {
+
+                Spacer()
+//                playbackRateButton
+//                pipButton
+                infoButton
+            }
             #endif
             #endif
         }
