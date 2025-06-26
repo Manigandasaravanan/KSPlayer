@@ -447,17 +447,16 @@ struct VideoControllerView: View {
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
-//            HStack(spacing: 0) {
-//                
-//                loadSubtitleButton
-//            }
-            HStack {
-
-                Spacer()
-//                playbackRateButton
-//                pipButton
-                infoButton
+            HStack(spacing: 0) {
+                loadSubtitleButton
             }
+//            HStack {
+//
+//                Spacer()
+////                playbackRateButton
+////                pipButton
+//                infoButton
+//            }
             #endif
             #endif
         }
@@ -475,8 +474,6 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Image(systemName: "square.and.arrow.down")
-                    .foregroundColor(.white)
                 Text("Download subtitle").font(Font(SubtitleModel.textFont))
             }
         }
@@ -710,32 +707,32 @@ struct VideoSettingView: View {
 
     var body: some View {
         PlatformView {
-            let videoTracks = config.playerLayer?.player.tracks(mediaType: .video)
-            if let videoTracks, !videoTracks.isEmpty {
-                Picker(selection: Binding {
-                    videoTracks.first { $0.isEnabled }?.trackID
-                } set: { value in
-                    if let track = videoTracks.first(where: { $0.trackID == value }) {
-                        config.playerLayer?.player.select(track: track)
-                    }
-                }) {
-                    ForEach(videoTracks, id: \.trackID) { track in
-                        Text(track.description).tag(track.trackID as Int32?)
-                    }
-                } label: {
-                    Label("Video Track", systemImage: "video.fill")
-                }
-                LabeledContent("Video Type", value: (videoTracks.first { $0.isEnabled }?.dynamicRange ?? .sdr).description)
-            }
-            TextField("Sutitle delay", value: $subtitleModel.subtitleDelay, format: .number)
+//            let videoTracks = config.playerLayer?.player.tracks(mediaType: .video)
+//            if let videoTracks, !videoTracks.isEmpty {
+//                Picker(selection: Binding {
+//                    videoTracks.first { $0.isEnabled }?.trackID
+//                } set: { value in
+//                    if let track = videoTracks.first(where: { $0.trackID == value }) {
+//                        config.playerLayer?.player.select(track: track)
+//                    }
+//                }) {
+//                    ForEach(videoTracks, id: \.trackID) { track in
+//                        Text(track.description).tag(track.trackID as Int32?)
+//                    }
+//                } label: {
+//                    Label("Video Track", systemImage: "video.fill")
+//                }
+//                LabeledContent("Video Type", value: (videoTracks.first { $0.isEnabled }?.dynamicRange ?? .sdr).description)
+//            }
+//            TextField("Sutitle delay", value: $subtitleModel.subtitleDelay, format: .number)
             TextField("Title", text: $subtitleTitle)
             Button("Search Sutitle") {
                 subtitleModel.searchSubtitle(query: subtitleTitle, languages: ["zh-cn"])
             }
-            LabeledContent("Stream Type", value: (videoTracks?.first { $0.isEnabled }?.fieldOrder ?? .progressive).description)
-            if let dynamicInfo = config.playerLayer?.player.dynamicInfo {
-                DynamicInfoView(dynamicInfo: dynamicInfo)
-            }
+//            LabeledContent("Stream Type", value: (videoTracks?.first { $0.isEnabled }?.fieldOrder ?? .progressive).description)
+//            if let dynamicInfo = config.playerLayer?.player.dynamicInfo {
+//                DynamicInfoView(dynamicInfo: dynamicInfo)
+//            }
             if let fileSize = config.playerLayer?.player.fileSize, fileSize > 0 {
                 LabeledContent("File Size", value: fileSize.kmFormatted + "B")
             }
