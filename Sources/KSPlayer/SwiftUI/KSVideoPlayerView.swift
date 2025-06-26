@@ -364,7 +364,7 @@ struct VideoControllerView: View {
     fileprivate var title: String
     fileprivate var volumeSliderSize: Double?
     @State
-    private var showVideoSetting = true
+    private var showVideoSetting = false
     @Environment(\.dismiss)
     private var dismiss
     public var body: some View {
