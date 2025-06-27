@@ -451,6 +451,7 @@ struct VideoControllerView: View {
                 loadSubtitleButton
                 Spacer()
                 muteButton
+                    .paddinng(.trailing, 6)
                 subtitleButton
             }.padding(.bottom, 8)
 //            HStack {
