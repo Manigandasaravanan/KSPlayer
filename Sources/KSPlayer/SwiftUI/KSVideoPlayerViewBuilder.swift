@@ -55,7 +55,12 @@ enum KSVideoPlayerViewBuilder {
                 Text(track.name).tag(track.subtitleID as String?)
             }
         } label: {
-            Image(systemName: "text.bubble.fill")
+            Image(systemName: "captions.bubble")
+                .padding(10) // Padding inside the circle
+                .background(
+                    Circle()
+                        .fill(Color.black.opacity(0.5)) // Black transparent background
+                )
         }
     }
 
@@ -89,6 +94,11 @@ enum KSVideoPlayerViewBuilder {
             config.isMuted.toggle()
         } label: {
             Image(systemName: config.isMuted ? speakerDisabledSystemName : speakerSystemName)
+                .padding(10) // Padding inside the circle
+                .background(
+                    Circle()
+                        .fill(Color.black.opacity(0.5)) // Black transparent background
+                )
         }
         .shadow(color: .black, radius: 1)
     }
@@ -112,7 +122,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "play.fill"
         #else
-        "play.circle.fill"
+        "play.fill"
         #endif
     }
 
@@ -120,7 +130,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "pause.fill"
         #else
-        "pause.circle.fill"
+        "pause.fill"
         #endif
     }
 
@@ -128,7 +138,7 @@ private extension KSVideoPlayerViewBuilder {
         #if os(xrOS)
         "speaker.fill"
         #else
-        "speaker.wave.2.circle.fill"
+        "speaker.wave.2.fill"
         #endif
     }
 
@@ -181,7 +191,7 @@ private extension KSVideoPlayerViewBuilder {
                 config.playerLayer?.play()
             }
         } label: {
-            Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? pauseSystemName : playSystemName))
+            Image(systemName: config.state == .error ? "play.fill" : (config.state.isPlaying ? pauseSystemName : playSystemName))
                 .font(.largeTitle)
         }
         #if os(xrOS)

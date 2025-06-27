@@ -437,19 +437,19 @@ struct VideoControllerView: View {
 //                    #endif
 //                }
                 AirPlayView().fixedSize()
-                muteButton
-                #if !os(xrOS)
-                contentModeButton
-                subtitleButton
+//                muteButton
+//                #if !os(xrOS)
+////                contentModeButton
+//                subtitleButton
                 #endif
             }
             Spacer()
             #if !os(xrOS)
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
-            HStack(spacing: 0) {
-                loadSubtitleButton
-            }
+//            HStack(spacing: 0) {
+//               
+//            }
 //            HStack {
 //
 //                Spacer()
@@ -457,6 +457,14 @@ struct VideoControllerView: View {
 ////                pipButton
 //                infoButton
 //            }
+            HStack {
+                loadSubtitleButton
+                Spacer()
+                AirPlayView().fixedSize()
+                muteButton
+                #if !os(xrOS)
+                subtitleButton
+            }
             #endif
             #endif
         }
@@ -476,9 +484,9 @@ struct VideoControllerView: View {
             HStack(spacing: 0) {
                 Text("🌐︎ Download subtitle")
                     .font(Font(SubtitleModel.textFont))
-                    .foregroundColor(.white) // Optional: text color
-                    .padding() // Padding inside the border
+                    .foregroundColor(.white)
             }
+            .background(.black.opacity(0.2))
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.white, lineWidth: 1)
