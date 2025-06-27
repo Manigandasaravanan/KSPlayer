@@ -130,9 +130,9 @@ private extension KSVideoPlayerViewBuilder {
 
     static var pauseSystemName: String {
         #if os(xrOS)
-        "pause.fill"
+        "speaker.fill"
         #else
-        "pause.fill"
+        "speaker.fill"
         #endif
     }
 
