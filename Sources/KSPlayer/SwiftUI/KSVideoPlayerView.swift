@@ -427,7 +427,7 @@ struct VideoControllerView: View {
 //                }
                 #endif
                 #endif
-                Spacer()
+//                Spacer()
                 
 //                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
 //                    audioButton(audioTracks: audioTracks)
@@ -480,11 +480,15 @@ struct VideoControllerView: View {
                 Text("🌐︎ Download subtitle")
                     .font(Font(SubtitleModel.textFont))
                     .foregroundColor(.white)
+                    .padding(8) // Inner padding
             }
-//            .background(.black.opacity())
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.black.opacity(0.5)) // Transparent black background
+            )
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.white, lineWidth: 1)
+                    .stroke(Color.white, lineWidth: 1) // White border
             )
         }
         .padding(.horizontal)

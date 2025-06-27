@@ -56,7 +56,8 @@ enum KSVideoPlayerViewBuilder {
             }
         } label: {
             Image(systemName: "captions.bubble")
-                .padding(10) // Padding inside the circle
+                .font(.system(size: 14)) // Reduce icon size
+                .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
                         .fill(Color.black.opacity(0.5)) // Black transparent background
@@ -94,7 +95,8 @@ enum KSVideoPlayerViewBuilder {
             config.isMuted.toggle()
         } label: {
             Image(systemName: config.isMuted ? speakerDisabledSystemName : speakerSystemName)
-                .padding(10) // Padding inside the circle
+                .font(.system(size: 14)) // Reduce icon size
+                .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
                         .fill(Color.black.opacity(0.5)) // Black transparent background
@@ -192,7 +194,7 @@ private extension KSVideoPlayerViewBuilder {
             }
         } label: {
             Image(systemName: config.state == .error ? "play.fill" : (config.state.isPlaying ? pauseSystemName : playSystemName))
-                .font(.largeTitle)
+                .font(.system(size: 32)) // Reduce icon size
         }
         #if os(xrOS)
         .contentTransition(.symbolEffect(.replace))
