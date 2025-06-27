@@ -452,7 +452,7 @@ struct VideoControllerView: View {
                 Spacer()
                 muteButton
                 subtitleButton
-            }
+            }.padding(.bottom, 8)
 //            HStack {
 //
 //                Spacer()

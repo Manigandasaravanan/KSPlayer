@@ -56,7 +56,7 @@ enum KSVideoPlayerViewBuilder {
             }
         } label: {
             Image(systemName: "captions.bubble")
-                .font(.system(size: 14)) // Reduce icon size
+                .font(.system(size: 18)) // Reduce icon size
                 .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
@@ -95,7 +95,7 @@ enum KSVideoPlayerViewBuilder {
             config.isMuted.toggle()
         } label: {
             Image(systemName: config.isMuted ? speakerDisabledSystemName : speakerSystemName)
-                .font(.system(size: 14)) // Reduce icon size
+                .font(.system(size: 18)) // Reduce icon size
                 .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
