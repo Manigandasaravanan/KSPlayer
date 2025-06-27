@@ -194,7 +194,8 @@ private extension KSVideoPlayerViewBuilder {
             }
         } label: {
             Image(systemName: config.state == .error ? "play.fill" : (config.state.isPlaying ? pauseSystemName : playSystemName))
-                .font(.system(size: 32)) // Reduce icon size
+                .resizable()
+                .font(.system(size: 64)) // Reduce icon size
         }
         #if os(xrOS)
         .contentTransition(.symbolEffect(.replace))
