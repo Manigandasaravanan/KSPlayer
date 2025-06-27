@@ -437,11 +437,11 @@ struct VideoControllerView: View {
 //                    #endif
 //                }
                 AirPlayView().fixedSize()
-                muteButton
-                #if !os(xrOS)
-//                contentModeButton
-                subtitleButton
-                #endif
+//                muteButton
+//                #if !os(xrOS)
+////                contentModeButton
+//                subtitleButton
+//                #endif
             }
             Spacer()
             #if !os(xrOS)
@@ -449,6 +449,9 @@ struct VideoControllerView: View {
             Spacer()
             HStack(spacing: 0) {
                 loadSubtitleButton
+                Spacer()
+                muteButton
+                subtitleButton
             }
 //            HStack {
 //
@@ -478,6 +481,7 @@ struct VideoControllerView: View {
                     .font(Font(SubtitleModel.textFont))
                     .foregroundColor(.white)
             }
+//            .background(.black.opacity())
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.white, lineWidth: 1)
