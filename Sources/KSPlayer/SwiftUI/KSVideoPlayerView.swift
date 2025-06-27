@@ -441,7 +441,7 @@ struct VideoControllerView: View {
 //                #if !os(xrOS)
 ////                contentModeButton
 //                subtitleButton
-                #endif
+//                #endif
             }
             Spacer()
             #if !os(xrOS)
@@ -464,8 +464,8 @@ struct VideoControllerView: View {
                 muteButton
                 #if !os(xrOS)
                 subtitleButton
+                #endif
             }
-            #endif
             #endif
         }
         #if !os(tvOS)
