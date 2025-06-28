@@ -8,12 +8,6 @@ import AVFoundation
 import MediaPlayer
 import SwiftUI
 
-public extension Bundle {
-    static var ksPlayer: Bundle {
-        Bundle.module
-    }
-}
-
 public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
 }
@@ -484,7 +478,7 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Image("download_cloud", bundle: .ksPlayer)
+                Image("download-cloud", bundle: .ksPlayer)
                     .resizable()
                     .frame(width: 16, height: 16)
                     .foregroundColor(.white)
