@@ -478,7 +478,12 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Text("🌐︎ Download subtitle")
+                Image("download_cloud")
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .foregroundColor(.white)
+                    .padding(8)
+                Text("Download subtitle")
                     .font(Font(SubtitleModel.textFont))
                     .foregroundColor(.white)
                     .padding(8) // Inner padding
