@@ -145,6 +145,25 @@ public extension SubtitleInfo {
     static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.subtitleID == rhs.subtitleID
     }
+    
+    var displayLanguageName: String {
+        let code = extractLanguageCode(from: name)
+        return Locale.current.localizedString(forLanguageCode: code)?.capitalized ?? name
+    }
+
+    private func extractLanguageCode(from name: String) -> String {
+        let lowercased = name.lowercased()
+        // Match common language codes in filename
+        if lowercased.contains("en") { return "en" }
+        if lowercased.contains("es") { return "es" }
+        if lowercased.contains("fr") { return "fr" }
+        if lowercased.contains("de") { return "de" }
+        if lowercased.contains("hi") { return "hi" }
+        if lowercased.contains("ar") { return "ar" }
+        if lowercased.contains("zh") { return "zh" }
+        // fallback
+        return name
+    }
 }
 
 public class KSSubtitle {
