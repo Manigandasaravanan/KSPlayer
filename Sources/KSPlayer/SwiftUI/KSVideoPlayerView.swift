@@ -478,7 +478,7 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Image("download-cloud", bundle: .ksPlayer)
+                Image("download_cloud", bundle: .ksPlayer)
                     .resizable()
                     .frame(width: 16, height: 16)
                     .foregroundColor(.white)
