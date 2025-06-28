@@ -40,33 +40,34 @@ enum KSVideoPlayerViewBuilder {
 
     @MainActor
     static func subtitleButton(config: KSVideoPlayer.Coordinator) -> some View {
-        MenuView(selection: Binding {
+        // ✅ Precompute unique subtitles just once
+        let uniqueSubtitles: [SubtitleInfo] = {
+            let grouped = Dictionary(
+                grouping: config.subtitleModel.subtitleInfos,
+                by: { $0.displayLanguageName }
+            )
+            return grouped.compactMap { $0.value.first }
+        }()
+
+        return MenuView(selection: Binding {
             config.subtitleModel.selectedSubtitleInfo?.subtitleID
         } set: { value in
             let info = config.subtitleModel.subtitleInfos.first { $0.subtitleID == value }
             config.subtitleModel.selectedSubtitleInfo = info
             if let info = info as? MediaPlayerTrack {
-                // 因为图片字幕想要实时的显示，那就需要seek。所以需要走select track
                 config.playerLayer?.player.select(track: info)
             }
         }) {
             Text("Off").tag(nil as String?)
-            let uniqueSubtitles = Dictionary(
-                grouping: config.subtitleModel.subtitleInfos,
-                by: { $0.displayLanguageName }
-            ).compactMap { $0.value.first }
 
             ForEach(uniqueSubtitles, id: \.subtitleID) { track in
                 Text(track.displayLanguageName).tag(track.subtitleID as String?)
             }
         } label: {
             Image(systemName: "captions.bubble")
-                .font(.system(size: 18)) // Reduce icon size
-                .padding(8) // Adjust padding to keep the circle neat
-                .background(
-                    Circle()
-                        .fill(Color.black.opacity(0.5)) // Black transparent background
-                )
+                .font(.system(size: 18))
+                .padding(8)
+                .background(Circle().fill(Color.black.opacity(0.5)))
         }
     }
 
