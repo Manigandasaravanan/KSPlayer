@@ -437,6 +437,7 @@ struct VideoControllerView: View {
                     #endif
                 }
                 AirPlayView().fixedSize()
+                lockButton
 //                muteButton
 //                #if !os(xrOS)
 ////                contentModeButton
@@ -485,7 +486,7 @@ struct VideoControllerView: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.black.opacity(0.5)) // Transparent black background
+                    .fill(Color.black.opacity(0.2)) // Transparent black background
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
@@ -530,7 +531,11 @@ struct VideoControllerView: View {
                 Text(track.displayLanguageName).tag(track.trackID as Int32?)
             }
         } label: {
-            Image(systemName: "waveform.circle.fill")
+            Image(systemName: "waveform")
+                .background(
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.black.opacity(0.2)) // Transparent black background
+                )
             #if os(xrOS)
                 .padding()
                 .clipShape(Circle())
