@@ -50,7 +50,10 @@ enum KSVideoPlayerViewBuilder {
         }()
 
         return MenuView(selection: Binding {
-            config.subtitleModel.selectedSubtitleInfo?.subtitleID
+            if let currentID = config.subtitleModel.selectedSubtitleInfo?.subtitleID,
+               !config.subtitleModel.subtitleInfos.contains(where: { $0.subtitleID == currentID }) {
+                config.subtitleModel.selectedSubtitleInfo = nil
+            }
         } set: { value in
             let info = config.subtitleModel.subtitleInfos.first { $0.subtitleID == value }
             config.subtitleModel.selectedSubtitleInfo = info
@@ -61,7 +64,7 @@ enum KSVideoPlayerViewBuilder {
             Text("Off").tag(nil as String?)
 
             ForEach(uniqueSubtitles, id: \.subtitleID) { track in
-                Text(track.displayLanguageName).tag(track.subtitleID as String?)
+                Text(track.displayLanguageName).tag(track.subtitleID)
             }
         } label: {
             Image(systemName: "captions.bubble")
