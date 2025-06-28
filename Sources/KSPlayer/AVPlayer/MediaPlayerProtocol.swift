@@ -130,6 +130,13 @@ public protocol MediaPlayerTrack: AnyObject, CustomStringConvertible {
     var formatDescription: CMFormatDescription? { get }
 }
 
+public extension MediaPlayerTrack {
+    var displayLanguageName: String {
+        guard let code = self.languageCode else { return "Unknown" }
+        return Locale.current.localizedString(forLanguageCode: code)?.capitalized ?? code.uppercased()
+    }
+}
+
 // public extension MediaPlayerTrack: Identifiable {
 //    var id: Int32 { trackID }
 // }

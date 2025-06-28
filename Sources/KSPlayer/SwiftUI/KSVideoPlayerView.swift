@@ -537,13 +537,6 @@ struct VideoControllerView: View {
             #endif
         }
     }
-    
-    extension MediaPlayerTrack {
-        var displayLanguageName: String {
-            guard let code = self.languageCode else { return "Unknown" }
-            return Locale.current.localizedString(forLanguageCode: code)?.capitalized ?? code.uppercased()
-        }
-    }
 
     private var subtitleButton: some View {
         KSVideoPlayerViewBuilder.subtitleButton(config: config)
