@@ -40,11 +40,6 @@ enum KSVideoPlayerViewBuilder {
 
     @MainActor
     static func subtitleButton(config: KSVideoPlayer.Coordinator) -> some View {
-        let uniqueSubtitles = Dictionary(
-            grouping: config.subtitleModel.subtitleInfos,
-            by: { $0.displayLanguageName }
-        ).compactMap { $0.value.first }
-        
         MenuView(selection: Binding {
             config.subtitleModel.selectedSubtitleInfo?.subtitleID
         } set: { value in
@@ -56,6 +51,11 @@ enum KSVideoPlayerViewBuilder {
             }
         }) {
             Text("Off").tag(nil as String?)
+            let uniqueSubtitles = Dictionary(
+                grouping: config.subtitleModel.subtitleInfos,
+                by: { $0.displayLanguageName }
+            ).compactMap { $0.value.first }
+
             ForEach(uniqueSubtitles, id: \.subtitleID) { track in
                 Text(track.displayLanguageName).tag(track.subtitleID as String?)
             }
