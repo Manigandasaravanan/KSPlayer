@@ -527,7 +527,9 @@ struct VideoControllerView: View {
             }
         }) {
             ForEach(audioTracks, id: \.trackID) { track in
-                Text(track.languageCode).tag(track.trackID as Int32?)
+                if langaugeCode = track.languageCode {
+                    Text(langaugeCode).tag(track.trackID as Int32?)
+                }
             }
         } label: {
             Image(systemName: "waveform.circle.fill")
