@@ -437,7 +437,7 @@ struct VideoControllerView: View {
                     #endif
                 }
                 AirPlayView().fixedSize()
-                lockButton
+//                lockButton
 //                muteButton
 //                #if !os(xrOS)
 ////                contentModeButton
