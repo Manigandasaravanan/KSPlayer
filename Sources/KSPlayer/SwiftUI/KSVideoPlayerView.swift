@@ -413,7 +413,7 @@ struct VideoControllerView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Image("download_cloud")
+                    Image(systemName: "arrow.backward")
                         .foregroundColor(.white)
                         .imageScale(.small)
                         .padding()
@@ -478,12 +478,7 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Image("download_cloud")
-                    .resizable()
-                    .frame(width: 16, height: 16)
-                    .foregroundColor(.white)
-                    .padding(8)
-                Text("Download subtitle")
+                Text("🌐︎ Download subtitle")
                     .font(Font(SubtitleModel.textFont))
                     .foregroundColor(.white)
                     .padding(8) // Inner padding
