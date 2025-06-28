@@ -51,7 +51,12 @@ enum KSVideoPlayerViewBuilder {
             }
         }) {
             Text("Off").tag(nil as String?)
-            ForEach(config.subtitleModel.subtitleInfos, id: \.subtitleID) { track in
+            let uniqueSubtitles = Dictionary(
+                grouping: config.subtitleModel.subtitleInfos,
+                by: { $0.displayLanguageName }
+            ).compactMap { $0.value.first }
+
+            ForEach(uniqueSubtitles, id: \.subtitleID) { track in
                 Text(track.displayLanguageName).tag(track.subtitleID as String?)
             }
         } label: {
