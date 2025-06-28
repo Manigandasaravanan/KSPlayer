@@ -532,6 +532,8 @@ struct VideoControllerView: View {
             }
         } label: {
             Image(systemName: "waveform")
+                .fixedSize()
+                .padding(8) // Inner padding
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.black.opacity(0.2)) // Transparent black background
