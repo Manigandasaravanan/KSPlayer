@@ -527,9 +527,7 @@ struct VideoControllerView: View {
             }
         }) {
             ForEach(audioTracks, id: \.trackID) { track in
-                if langaugeCode = track.languageCode {
-                    Text(langaugeCode).tag(track.trackID as Int32?)
-                }
+                Text(track.displayLanguageName).tag(track.trackID as Int32?)
             }
         } label: {
             Image(systemName: "waveform.circle.fill")
@@ -537,6 +535,13 @@ struct VideoControllerView: View {
                 .padding()
                 .clipShape(Circle())
             #endif
+        }
+    }
+    
+    extension MediaPlayerTrack {
+        var displayLanguageName: String {
+            guard let code = self.languageCode else { return "Unknown" }
+            return Locale.current.localizedString(forLanguageCode: code)?.capitalized ?? code.uppercased()
         }
     }
 
