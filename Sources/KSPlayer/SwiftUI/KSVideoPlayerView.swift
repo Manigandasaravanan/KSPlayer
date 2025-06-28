@@ -413,7 +413,7 @@ struct VideoControllerView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Image(systemName: "arrow.backward")
+                    Image("download_cloud")
                         .foregroundColor(.white)
                         .imageScale(.small)
                         .padding()
