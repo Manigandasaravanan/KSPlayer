@@ -532,11 +532,11 @@ struct VideoControllerView: View {
             }
         } label: {
             Image(systemName: "waveform")
-                .fixedSize()
-                .padding(8) // Inner padding
+                .font(.system(size: 18)) // Reduce icon size
+                .padding(8) // Adjust padding to keep the circle neat
                 .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.black.opacity(0.2)) // Transparent black background
+                    Circle()
+                        .fill(Color.black.opacity(0.5)) // Black transparent background
                 )
             #if os(xrOS)
                 .padding()
