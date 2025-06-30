@@ -367,6 +367,7 @@ struct VideoControllerView: View {
     private var showVideoSetting = false
     @Environment(\.dismiss)
     private var dismiss
+    public var showDownloadSubtitle = false
     public var body: some View {
         VStack {
             #if os(tvOS)
@@ -449,7 +450,9 @@ struct VideoControllerView: View {
             KSVideoPlayerViewBuilder.playbackControlView(config: config)
             Spacer()
             HStack(spacing: 0) {
-                loadSubtitleButton
+                if showDownloadSubtitle {
+                    loadSubtitleButton
+                }
                 Spacer()
                 muteButton
                     .padding(.trailing, 6)
