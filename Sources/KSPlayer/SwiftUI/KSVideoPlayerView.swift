@@ -44,7 +44,7 @@ public struct KSVideoPlayerView: View {
     }
     
     @State
-    public var showDownloadSubtitle = false
+    public var showDownloadSubtitle: Bool
 
     public init(url: URL, options: KSOptions, title: String? = nil, showDownloadSubtitle: Bool = false) {
         self.init(coordinator: KSVideoPlayer.Coordinator(), url: url, options: options, title: title, subtitleDataSouce: nil, showDownloadSubtitle: showDownloadSubtitle)
@@ -371,7 +371,8 @@ struct VideoControllerView: View {
     private var showVideoSetting = false
     @Environment(\.dismiss)
     private var dismiss
-    public var showDownloadSubtitle = false
+    @Binding
+    fileprivate var showDownloadSubtitle: Bool
     public var body: some View {
         VStack {
             #if os(tvOS)
