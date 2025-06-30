@@ -42,16 +42,19 @@ public struct KSVideoPlayerView: View {
             #endif
         }
     }
+    
+    @State
+    public var showDownloadSubtitle = false
 
-    public init(url: URL, options: KSOptions, title: String? = nil) {
-        self.init(coordinator: KSVideoPlayer.Coordinator(), url: url, options: options, title: title, subtitleDataSouce: nil)
+    public init(url: URL, options: KSOptions, title: String? = nil, showDownloadSubtitle: Bool = false) {
+        self.init(coordinator: KSVideoPlayer.Coordinator(), url: url, options: options, title: title, subtitleDataSouce: nil, showDownloadSubtitle: showDownloadSubtitle)
     }
 
-    public init(coordinator: KSVideoPlayer.Coordinator, url: URL, options: KSOptions, title: String? = nil, subtitleDataSouce: SubtitleDataSouce? = nil) {
-        self.init(coordinator: coordinator, url: .init(wrappedValue: url), options: options, title: .init(wrappedValue: title ?? url.lastPathComponent), subtitleDataSouce: subtitleDataSouce)
+    public init(coordinator: KSVideoPlayer.Coordinator, url: URL, options: KSOptions, title: String? = nil, subtitleDataSouce: SubtitleDataSouce? = nil, showDownloadSubtitle: Bool = false) {
+        self.init(coordinator: coordinator, url: .init(wrappedValue: url), options: options, title: .init(wrappedValue: title ?? url.lastPathComponent), subtitleDataSouce: subtitleDataSouce, showDownloadSubtitle: showDownloadSubtitle)
     }
 
-    public init(coordinator: KSVideoPlayer.Coordinator, url: State<URL>, options: KSOptions, title: State<String>, subtitleDataSouce: SubtitleDataSouce?) {
+    public init(coordinator: KSVideoPlayer.Coordinator, url: State<URL>, options: KSOptions, title: State<String>, subtitleDataSouce: SubtitleDataSouce?, showDownloadSubtitle: Bool = false) {
         _url = url
         _playerCoordinator = .init(wrappedValue: coordinator)
         _title = title
@@ -60,6 +63,7 @@ public struct KSVideoPlayerView: View {
         #endif
         self.options = options
         self.subtitleDataSouce = subtitleDataSouce
+        self.showDownloadSubtitle = showDownloadSubtitle
     }
 
     public var body: some View {
@@ -230,7 +234,7 @@ public struct KSVideoPlayerView: View {
 
     private func controllerView(playerWidth: Double) -> some View {
         VStack {
-            VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4)
+            VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4, showDownloadSubtitle: $showDownloadSubtitle)
             #if !os(xrOS)
             // 设置opacity为0，还是会去更新View。所以只能这样了
             if playerCoordinator.isMaskShow {
