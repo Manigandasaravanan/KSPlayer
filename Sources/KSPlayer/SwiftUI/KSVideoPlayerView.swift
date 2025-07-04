@@ -415,6 +415,12 @@ struct VideoControllerView: View {
 //                        .frame(width: 56)
                 }
                 .font(.caption)
+            }.onReceive(NotificationCenter.default.publisher(for: .subtitleModalDismissed)) { _ in
+                // Force focus to a safe non-triggering field after dismiss
+                focusableField = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    focusableField = .controller // Or .play or something safe
+                }
             }
             #else
             HStack {
