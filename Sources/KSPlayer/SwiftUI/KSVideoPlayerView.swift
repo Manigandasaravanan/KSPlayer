@@ -376,6 +376,9 @@ struct VideoControllerView: View {
     public var body: some View {
         VStack {
             #if os(tvOS)
+            if showDownloadSubtitle {
+                loadSubtitleButton
+            }
             Spacer()
             HStack {
                 Text(title)
