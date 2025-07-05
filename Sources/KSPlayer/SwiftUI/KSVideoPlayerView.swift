@@ -136,6 +136,7 @@ public struct KSVideoPlayerView: View {
         #endif
             .ignoresSafeArea()
             .onAppear {
+                isDropdownShow = false
                 focusableField = .play
                 if let subtitleDataSouce {
                     playerCoordinator.subtitleModel.addSubtitle(dataSouce: subtitleDataSouce)
@@ -321,6 +322,11 @@ public struct KSVideoPlayerView: View {
             }
         }
     }
+    
+    public func resetFocus() {
+        focusableField = .play
+        isDropdownShow = false
+    }
 }
 
 extension View {
@@ -415,12 +421,6 @@ struct VideoControllerView: View {
 //                        .frame(width: 56)
                 }
                 .font(.caption)
-            }.onReceive(NotificationCenter.default.publisher(for: .subtitleModalDismissed)) { _ in
-                // Force focus to a safe non-triggering field after dismiss
-                focusableField = nil
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    focusableField = .controller // Or .play or something safe
-                }
             }
             #else
             HStack {
