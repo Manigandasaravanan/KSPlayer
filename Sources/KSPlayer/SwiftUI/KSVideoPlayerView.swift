@@ -136,7 +136,6 @@ public struct KSVideoPlayerView: View {
         #endif
             .ignoresSafeArea()
             .onAppear {
-                isDropdownShow = false
                 focusableField = .play
                 if let subtitleDataSouce {
                     playerCoordinator.subtitleModel.addSubtitle(dataSouce: subtitleDataSouce)
@@ -322,11 +321,6 @@ public struct KSVideoPlayerView: View {
             }
         }
     }
-    
-    public func resetFocus() {
-        focusableField = .play
-        isDropdownShow = false
-    }
 }
 
 extension View {
@@ -382,9 +376,6 @@ struct VideoControllerView: View {
     public var body: some View {
         VStack {
             #if os(tvOS)
-            if showDownloadSubtitle {
-                loadSubtitleButton
-            }
             Spacer()
             HStack {
                 Text(title)
