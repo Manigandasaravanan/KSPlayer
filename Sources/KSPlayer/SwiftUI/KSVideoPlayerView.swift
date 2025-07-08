@@ -19,7 +19,7 @@ public struct KSVideoPlayerView: View {
     @State
     private var title: String
     @StateObject
-    private var playerCoordinator: KSVideoPlayer.Coordinator
+    public var playerCoordinator: KSVideoPlayer.Coordinator
     @Environment(\.dismiss)
     private var dismiss
     @FocusState
