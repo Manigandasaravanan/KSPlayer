@@ -10,6 +10,7 @@ import SwiftUI
 
 public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
+    public static var onCloseVideoTapped: ((Int) -> Void)? = nil
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
@@ -417,6 +418,7 @@ struct VideoControllerView: View {
             HStack {
                 #if !os(xrOS)
                 Button(action: {
+                    KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
                     dismiss()
                 }) {
                     Image(systemName: "arrow.backward")
