@@ -9,8 +9,8 @@ import MediaPlayer
 import SwiftUI
 
 public class KSPlayerEventBus {
-    public static var onLoadSubtitleTapped: (() -> Void)? = nil
-    public static var onCloseVideoTapped: ((Int) -> Void)? = nil
+    public static let onLoadSubtitleTapped: (() -> Void)? = nil
+    public static let onCloseVideoTapped: ((Int) -> Void)? = nil
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
