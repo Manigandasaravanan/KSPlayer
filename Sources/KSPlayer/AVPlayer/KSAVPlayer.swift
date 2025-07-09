@@ -397,6 +397,7 @@ extension KSAVPlayer: MediaPlayerProtocol {
     }
 
     public func seek(time: TimeInterval, completion: @escaping ((Bool) -> Void)) {
+        KSLog("seek time: \(time)")
         let time = max(time, 0)
         shouldSeekTo = time
         playbackState = .seeking
