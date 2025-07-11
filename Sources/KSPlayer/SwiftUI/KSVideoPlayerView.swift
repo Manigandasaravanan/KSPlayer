@@ -109,6 +109,7 @@ public struct KSVideoPlayerView: View {
                 } else {
                     switch focusableField {
                     case .play:
+                        KSPlayerEventBus.onCloseVideoTapped?(playerCoordinator.timemodel.currentTime)
                         dismiss()
                     default:
                         focusableField = .play
