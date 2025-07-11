@@ -9,7 +9,7 @@ import MediaPlayer
 import SwiftUI
 
 public class KSPlayerEventBus {
-    public static let onLoadSubtitleTapped: (() -> Void)? = nil
+    public static var onLoadSubtitleTapped: (() -> Void)? = nil
     public static var onCloseVideoTapped: ((Int) -> Void)? = nil
 }
 
