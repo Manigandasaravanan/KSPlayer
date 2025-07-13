@@ -399,6 +399,7 @@ struct VideoControllerView: View {
                                 .font(Font(SubtitleModel.textFont))
                                 .foregroundColor(.white)
                                 .padding(8)
+                                .frame(width: 255)
                         }
 //                        .frame(width: 180)
                         Button {
