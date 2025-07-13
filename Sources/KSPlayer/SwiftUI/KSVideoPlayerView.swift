@@ -396,10 +396,10 @@ struct VideoControllerView: View {
                             KSPlayerEventBus.onLoadSubtitleTapped?()
                         } label: {
                             Text("🌐︎ Download subtitle")
-                                .font(Font(SubtitleModel.textFont))
+                                .font(.caption)
                                 .foregroundColor(.white)
                                 .padding(8)
-                                .frame(width: 255)
+                                .frame(width: 750)
                         }
 //                        .frame(width: 180)
                         Button {
