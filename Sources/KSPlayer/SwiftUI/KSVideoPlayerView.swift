@@ -498,7 +498,7 @@ struct VideoControllerView: View {
             HStack(spacing: 0) {
                 if hSizeClass == .regular {
                     Text("🌐︎ Download subtitle")
-                        .font(.system(size: 18)) // Reduce icon size
+                        .font(.system(size: 24)) // Reduce icon size
                         .foregroundColor(.white)
                         .padding(8)
                 } else {
