@@ -376,10 +376,13 @@ struct VideoControllerView: View {
     private var dismiss
     @Binding
     fileprivate var showDownloadSubtitle: Bool
-    @Environment(\.horizontalSizeClass) private var hSizeClass
+//    @Environment(\.horizontalSizeClass) private var hSizeClass
     @FocusState private var isDowloadSubtitleFocused
     public var body: some View {
         ZStack {
+#if !os(tvOS)
+            Color.black.opacity(0.3)
+#endif
             VStack {
 #if os(tvOS)
                 Spacer()
@@ -425,7 +428,6 @@ struct VideoControllerView: View {
                     }
                 }
 #else
-                Color.black.opacity(0.3)
                 HStack {
 #if !os(xrOS)
                     Button(action: {
@@ -434,11 +436,11 @@ struct VideoControllerView: View {
                     }) {
                         Image(systemName: "arrow.backward")
                             .foregroundColor(.white)
-                            .imageScale(hSizeClass == .regular ? .medium : .small)
+                            .imageScale(UIDevice.current.userInterfaceIdiom == .pad ? .medium : .small)
                             .padding()
                     }
                     Spacer()
-                    KSVideoPlayerViewBuilder.titleView(title: title, config: config, isIPad: hSizeClass == .regular ? true : false)
+                    KSVideoPlayerViewBuilder.titleView(title: title, config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad ?  true : false)
                     Spacer()
 #if !os(tvOS)
                     //                if config.playerLayer?.player.allowsExternalPlayback == true {
@@ -449,7 +451,7 @@ struct VideoControllerView: View {
                     //                Spacer()
                     
                     if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                        audioButton(audioTracks: audioTracks, isIpad: hSizeClass == .regular ? true : false)
+                        audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad ? true : false)
                             .padding(.trailing, 6)
 #if os(xrOS)
                             .aspectRatio(1, contentMode: .fit)
@@ -458,7 +460,7 @@ struct VideoControllerView: View {
                     }
 //                    chromecaseButton
 //                        .padding(.trailing, 6)
-                    AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 1.2 : 1.0)
+                    AirPlayView().fixedSize().scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
                     
                     //                lockButton
                     //                muteButton
@@ -469,7 +471,7 @@ struct VideoControllerView: View {
                 }
                 Spacer()
 #if !os(xrOS)
-                KSVideoPlayerViewBuilder.playbackControlView(config: config, isIPad: hSizeClass == .regular ? true : false)
+                KSVideoPlayerViewBuilder.playbackControlView(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad ? true : false)
                 Spacer()
                 HStack(spacing: 0) {
                     if showDownloadSubtitle {
@@ -505,7 +507,7 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                if hSizeClass == .regular {
+                if UIDevice.current.userInterfaceIdiom == .pad {
                     Text("🌐︎ Download subtitle")
                         .font(.system(size: 24)) // Reduce icon size
                         .foregroundColor(.white)
@@ -544,7 +546,7 @@ struct VideoControllerView: View {
         .padding(16)
         .glassBackgroundEffect()
         #else
-        KSVideoPlayerViewBuilder.muteButton(config: config, isIPad: hSizeClass == .regular ? true : false)
+        KSVideoPlayerViewBuilder.muteButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad ? true : false)
         #endif
     }
     
@@ -555,7 +557,7 @@ struct VideoControllerView: View {
 //            Image("chrome-cast", bundle: .module)
 //                .renderingMode(.template)
 //                .foregroundStyle(Color.white)
-//                .font(.system(size: hSizeClass == .regular ? 18 : 18)) // Reduce icon size
+//                .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 18 : 18)) // Reduce icon size
 //                .padding(8) // Adjust padding to keep the circle neat
 //                .background(
 //                    Circle()
@@ -596,7 +598,7 @@ struct VideoControllerView: View {
     }
 
     private var subtitleButton: some View {
-        KSVideoPlayerViewBuilder.subtitleButton(config: config, isIPad: hSizeClass == .regular ? true : false)
+        KSVideoPlayerViewBuilder.subtitleButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad ? true : false)
     }
 
 //    private var playbackRateButton: some View {
@@ -658,15 +660,15 @@ struct VideoTimeShowView: View {
     @ObservedObject
     fileprivate var model: ControllerTimeModel
 //    fileprivate var timeFont: Font?
-    @Environment(\.horizontalSizeClass) private var hSizeClass
-    @Environment(\.verticalSizeClass) private var vSizeClass
-    @Environment(\.sizeCategory) private var sizeCategory
+//    @Environment(\.horizontalSizeClass) private var hSizeClass
+//    @Environment(\.verticalSizeClass) private var vSizeClass
+//    @Environment(\.sizeCategory) private var sizeCategory
     fileprivate var timeFont: Font {
             #if os(tvOS)
             return .system(size: 30, design: .monospaced)
             #else
             // If it's iPad (regular width), use bigger font
-            if hSizeClass == .regular {
+            if UIDevice.current.userInterfaceIdiom == .pad {
                 return .system(size: 22, design: .monospaced)
             } else {
                 return .system(size: 16, design: .monospaced)
