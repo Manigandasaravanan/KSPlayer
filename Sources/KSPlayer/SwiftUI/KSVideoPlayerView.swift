@@ -456,7 +456,7 @@ struct VideoControllerView: View {
             }
             Spacer()
             #if !os(xrOS)
-            KSVideoPlayerViewBuilder.playbackControlView(config: config)
+            KSVideoPlayerViewBuilder.playbackControlView(config: config, isIPad: hSizeClass == .regular ? true : false)
             Spacer()
             HStack(spacing: 0) {
                 if showDownloadSubtitle {
@@ -523,7 +523,7 @@ struct VideoControllerView: View {
         .padding(16)
         .glassBackgroundEffect()
         #else
-        KSVideoPlayerViewBuilder.muteButton(config: config)
+        KSVideoPlayerViewBuilder.muteButton(config: config, isIPad: hSizeClass == .regular ? true : false)
         #endif
     }
 

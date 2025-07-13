@@ -10,7 +10,7 @@ import SwiftUI
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
 enum KSVideoPlayerViewBuilder {
     @MainActor
-    static func playbackControlView(config: KSVideoPlayer.Coordinator, spacing: CGFloat? = nil) -> some View {
+    static func playbackControlView(config: KSVideoPlayer.Coordinator, spacing: CGFloat? = nil, isIPad: Bool = false) -> some View {
         HStack(spacing: spacing) {
             // Playback controls don't need spacers for visionOS, since the controls are laid out in a HStack.
             #if os(xrOS)
@@ -19,11 +19,11 @@ enum KSVideoPlayerViewBuilder {
             forwardButton(config: config)
             #else
             Spacer()
-            backwardButton(config: config)
+            backwardButton(config: config, isIPad: isIPad)
             Spacer()
             playButton(config: config)
             Spacer()
-            forwardButton(config: config)
+            forwardButton(config: config, isIPad: isIPad)
             Spacer()
             #endif
         }
@@ -87,7 +87,7 @@ enum KSVideoPlayerViewBuilder {
     static func titleView(title: String, config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         HStack {
             Text(title)
-                .font(isIPad ? .headline : .subheadline)
+                .font(isIPad ? .largeTitle : .subheadline)
                 .foregroundStyle(Color.white)
             ProgressView()
                 .opacity(config.state == .buffering ? 1 : 0)
@@ -95,12 +95,12 @@ enum KSVideoPlayerViewBuilder {
     }
 
     @MainActor
-    static func muteButton(config: KSVideoPlayer.Coordinator) -> some View {
+    static func muteButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         Button {
             config.isMuted.toggle()
         } label: {
             Image(systemName: config.isMuted ? speakerDisabledSystemName : speakerSystemName)
-                .font(.system(size: 18)) // Reduce icon size
+                .font(.system(size: isIPad ? 26 : 18)) // Reduce icon size
                 .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
@@ -159,13 +159,18 @@ private extension KSVideoPlayerViewBuilder {
 
     @MainActor
     @ViewBuilder
-    static func backwardButton(config: KSVideoPlayer.Coordinator) -> some View {
+    static func backwardButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         if config.playerLayer?.player.seekable ?? false {
             Button {
                 config.skip(interval: -15)
             } label: {
-                Image(systemName: "gobackward.15")
-                    .font(.largeTitle)
+                if isIPad {
+                    Image(systemName: "gobackward.15")
+                        .font(.system(size: 48))
+                } else {
+                    Image(systemName: "gobackward.15")
+                        .font(.largeTitle)
+                }
             }
             #if !os(tvOS)
             .keyboardShortcut(.leftArrow, modifiers: .none)
@@ -175,13 +180,18 @@ private extension KSVideoPlayerViewBuilder {
 
     @MainActor
     @ViewBuilder
-    static func forwardButton(config: KSVideoPlayer.Coordinator) -> some View {
+    static func forwardButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         if config.playerLayer?.player.seekable ?? false {
             Button {
                 config.skip(interval: 15)
             } label: {
-                Image(systemName: "goforward.15")
-                    .font(.largeTitle)
+                if isIPad {
+                    Image(systemName: "goforward.15")
+                        .font(.system(size: 48))
+                } else {
+                    Image(systemName: "goforward.15")
+                        .font(.largeTitle)
+                }
             }
             #if !os(tvOS)
             .keyboardShortcut(.rightArrow, modifiers: .none)
