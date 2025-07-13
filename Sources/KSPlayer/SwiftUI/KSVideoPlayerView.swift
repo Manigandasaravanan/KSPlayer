@@ -11,6 +11,7 @@ import SwiftUI
 public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
     public static var onCloseVideoTapped: ((Int) -> Void)? = nil
+    public static var onOpenChromecastTapped: (() -> Void)? = nil
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
@@ -543,27 +544,17 @@ struct VideoControllerView: View {
     
     private var chromecaseButton: some View {
         Button(action: {
-//            KSPlayerEventBus.onLoadSubtitleTapped?()
+            KSPlayerEventBus.onOpenChromecastTapped?()
         }) {
-            HStack(spacing: 0) {
-                Image("chrome-cast", bundle: .module)
-                    .renderingMode(.template)
-                    .foregroundStyle(Color.white)
-                    .font(.system(size: hSizeClass == .regular ? 18 : 18)) // Reduce icon size
-                    .padding(8) // Adjust padding to keep the circle neat
-                    .background(
-                        Circle()
-                            .fill(Color.black.opacity(0.5)) // Black transparent background
-                    )
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.black.opacity(0.2)) // Transparent black background
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.white, lineWidth: 1) // White border
-            )
+            Image("chrome-cast", bundle: .module)
+                .renderingMode(.template)
+                .foregroundStyle(Color.white)
+                .font(.system(size: hSizeClass == .regular ? 18 : 18)) // Reduce icon size
+                .padding(8) // Adjust padding to keep the circle neat
+                .background(
+                    Circle()
+                        .fill(Color.black.opacity(0.5)) // Black transparent background
+                )
         }
         .padding(.horizontal)
     }
