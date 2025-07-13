@@ -399,7 +399,7 @@ struct VideoControllerView: View {
                                 .font(.caption)
                                 .foregroundColor(.white)
                                 .padding(8)
-                                .frame(width: 750)
+                                .frame(width: 350)
                         }
 //                        .frame(width: 180)
                         Button {
