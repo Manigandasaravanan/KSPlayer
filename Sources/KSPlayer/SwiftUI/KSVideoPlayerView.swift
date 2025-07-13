@@ -400,9 +400,8 @@ struct VideoControllerView: View {
                                 .font(.caption)
                                 .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
                                 .padding(8)
-                                .frame(width: 350)
+                                .frame(width: 250)
                         }.focused($isDowloadSubtitleFocused)
-//                        .frame(width: 180)
                         Button {
                             if config.state.isPlaying {
                                 config.playerLayer?.pause()
@@ -411,17 +410,26 @@ struct VideoControllerView: View {
                             }
                         } label: {
                             Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
+                                .font(.caption)
+                                .padding(8)
                         }
                         .frame(width: 56)
                         if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                             audioButton(audioTracks: audioTracks)
+                                .font(.caption)
+                                .padding(8)
                         }
                         muteButton
+                            .font(.caption)
+                            .padding(8)
                             .frame(width: 56)
                         //                    loadSubtitleButton
                         //                    contentModeButton
                         //                        .frame(width: 56)
                         subtitleButton
+                            .font(.caption)
+                            .padding(8)
+                            .frame(width: 56)
                         //                    playbackRateButton
                         //                    pipButton
                         //                        .frame(width: 56)
