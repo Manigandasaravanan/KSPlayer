@@ -375,6 +375,7 @@ struct VideoControllerView: View {
     private var dismiss
     @Binding
     fileprivate var showDownloadSubtitle: Bool
+    @Environment(\.horizontalSizeClass) private var hSizeClass
     public var body: some View {
         VStack {
             #if os(tvOS)
@@ -424,11 +425,11 @@ struct VideoControllerView: View {
                 }) {
                     Image(systemName: "arrow.backward")
                         .foregroundColor(.white)
-                        .imageScale(.small)
+                        .imageScale(hSizeClass == .regular ? .medium : .small)
                         .padding()
                 }
                 Spacer()
-                KSVideoPlayerViewBuilder.titleView(title: title, config: config)
+                KSVideoPlayerViewBuilder.titleView(title: title, config: config, isIPad: hSizeClass == .regular ? true : false)
                 Spacer()
                 #if !os(tvOS)
 //                if config.playerLayer?.player.allowsExternalPlayback == true {
@@ -439,7 +440,7 @@ struct VideoControllerView: View {
 //                Spacer()
                 
                 if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                    audioButton(audioTracks: audioTracks)
+                    audioButton(audioTracks: audioTracks, isIpad: hSizeClass == .regular ? true : false)
                     #if os(xrOS)
                         .aspectRatio(1, contentMode: .fit)
                         .glassBackgroundEffect()
@@ -530,7 +531,7 @@ struct VideoControllerView: View {
         KSVideoPlayerViewBuilder.contentModeButton(config: config)
     }
 
-    private func audioButton(audioTracks: [MediaPlayerTrack]) -> some View {
+    private func audioButton(audioTracks: [MediaPlayerTrack], isIpad: Bool) -> some View {
         MenuView(selection: Binding {
             audioTracks.first { $0.isEnabled }?.trackID
         } set: { value in
@@ -543,7 +544,7 @@ struct VideoControllerView: View {
             }
         } label: {
             Image(systemName: "waveform")
-                .font(.system(size: 18)) // Reduce icon size
+                .font(.system(size: isIpad ? 24 : 18)) // Reduce icon size
                 .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
@@ -557,7 +558,7 @@ struct VideoControllerView: View {
     }
 
     private var subtitleButton: some View {
-        KSVideoPlayerViewBuilder.subtitleButton(config: config)
+        KSVideoPlayerViewBuilder.subtitleButton(config: config, isIPad: hSizeClass == .regular ? true : false)
     }
 
 //    private var playbackRateButton: some View {

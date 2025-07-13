@@ -39,7 +39,7 @@ enum KSVideoPlayerViewBuilder {
     }
 
     @MainActor
-    static func subtitleButton(config: KSVideoPlayer.Coordinator) -> some View {
+    static func subtitleButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         MenuView(selection: Binding {
             config.subtitleModel.selectedSubtitleInfo?.subtitleID
         } set: { value in
@@ -61,7 +61,7 @@ enum KSVideoPlayerViewBuilder {
             }
         } label: {
             Image(systemName: "captions.bubble")
-                .font(.system(size: 18)) // Reduce icon size
+                .font(.system(size: isIPad ? 26 : 18)) // Reduce icon size
                 .padding(8) // Adjust padding to keep the circle neat
                 .background(
                     Circle()
@@ -84,10 +84,10 @@ enum KSVideoPlayerViewBuilder {
     }
 
     @MainActor
-    static func titleView(title: String, config: KSVideoPlayer.Coordinator) -> some View {
+    static func titleView(title: String, config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         HStack {
             Text(title)
-                .font(.subheadline)
+                .font(isIPad ? .headline : .subheadline)
                 .foregroundStyle(Color.white)
             ProgressView()
                 .opacity(config.state == .buffering ? 1 : 0)
