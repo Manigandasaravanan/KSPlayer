@@ -400,7 +400,7 @@ struct VideoControllerView: View {
                                 .foregroundColor(.white)
                                 .padding(8)
                         }
-                        .frame(width: 180)
+//                        .frame(width: 180)
                         Button {
                             if config.state.isPlaying {
                                 config.playerLayer?.pause()
