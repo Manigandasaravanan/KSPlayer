@@ -383,7 +383,7 @@ struct VideoControllerView: View {
             VStack {
 #if os(tvOS)
                 Spacer()
-                HStack(spacing: 16) {
+                HStack {
                     Text(title)
                         .lineLimit(2)
                         .layoutPriority(3)
@@ -391,7 +391,7 @@ struct VideoControllerView: View {
                         .opacity(config.state == .buffering ? 1 : 0)
                     Spacer()
                         .layoutPriority(2)
-                    HStack(spacing: 16) {
+                    HStack {
                         Button {
                             isDowloadSubtitleFocused = false
                             KSPlayerEventBus.onLoadSubtitleTapped?()
