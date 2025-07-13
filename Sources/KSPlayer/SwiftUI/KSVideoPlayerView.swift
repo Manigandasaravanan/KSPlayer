@@ -377,9 +377,9 @@ struct VideoControllerView: View {
     @Binding
     fileprivate var showDownloadSubtitle: Bool
     @Environment(\.horizontalSizeClass) private var hSizeClass
+    @FocusState private var isDowloadSubtitleFocused
     public var body: some View {
         ZStack {
-            Color.black.opacity(0.3)
             VStack {
 #if os(tvOS)
                 Spacer()
@@ -393,14 +393,15 @@ struct VideoControllerView: View {
                         .layoutPriority(2)
                     HStack {
                         Button {
+                            isDowloadSubtitleFocused = false
                             KSPlayerEventBus.onLoadSubtitleTapped?()
                         } label: {
                             Text("🌐︎ Download subtitle")
                                 .font(.caption)
-                                .foregroundColor(.white)
+                                .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
                                 .padding(8)
                                 .frame(width: 350)
-                        }
+                        }.focused($isDowloadSubtitleFocused)
 //                        .frame(width: 180)
                         Button {
                             if config.state.isPlaying {
@@ -430,6 +431,7 @@ struct VideoControllerView: View {
                     .font(.caption)
                 }
 #else
+                Color.black.opacity(0.3)
                 HStack {
 #if !os(xrOS)
                     Button(action: {
