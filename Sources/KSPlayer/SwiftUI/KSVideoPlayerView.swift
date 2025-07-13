@@ -378,8 +378,8 @@ struct VideoControllerView: View {
     @Environment(\.horizontalSizeClass) private var hSizeClass
     public var body: some View {
         ZStack {
-            Color.black.opacity(0.6)
-                   .cornerRadius(12) // remove if you want square edges
+            Color.black.opacity(0.8)
+                .ignoresSafeArea()
             VStack {
 #if os(tvOS)
                 Spacer()
@@ -449,7 +449,7 @@ struct VideoControllerView: View {
                             .glassBackgroundEffect()
 #endif
                     }
-                    AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 2.5 : 1.8)
+                    AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 2.0 : 1.8)
                     
                     //                lockButton
                     //                muteButton
