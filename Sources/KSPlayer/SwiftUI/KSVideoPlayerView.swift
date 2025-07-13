@@ -383,7 +383,7 @@ struct VideoControllerView: View {
             VStack {
 #if os(tvOS)
                 Spacer()
-                HStack {
+                HStack(spacing: 16) {
                     Text(title)
                         .lineLimit(2)
                         .layoutPriority(3)
