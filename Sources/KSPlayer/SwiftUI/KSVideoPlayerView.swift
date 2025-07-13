@@ -449,7 +449,7 @@ struct VideoControllerView: View {
                             .glassBackgroundEffect()
 #endif
                     }
-                    AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 2.0 : 1.8)
+                    AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 1.8 : 1.0)
                     
                     //                lockButton
                     //                muteButton
