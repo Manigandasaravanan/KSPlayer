@@ -21,7 +21,7 @@ enum KSVideoPlayerViewBuilder {
             Spacer()
             backwardButton(config: config, isIPad: isIPad)
             Spacer()
-            playButton(config: config)
+            playButton(config: config, isIPad: isIPad)
             Spacer()
             forwardButton(config: config, isIPad: isIPad)
             Spacer()
