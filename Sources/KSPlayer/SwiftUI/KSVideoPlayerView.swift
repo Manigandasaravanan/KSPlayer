@@ -296,7 +296,7 @@ public struct KSVideoPlayerView: View {
         HStack {
 //            KSVideoPlayerViewBuilder.playbackControlView(config: playerCoordinator, spacing: 16)
             Spacer()
-            VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel, timeFont: .title3.monospacedDigit())
+            VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
             Spacer()
             Group {
                 KSVideoPlayerViewBuilder.contentModeButton(config: playerCoordinator)
@@ -618,11 +618,26 @@ struct VideoTimeShowView: View {
     fileprivate var config: KSVideoPlayer.Coordinator
     @ObservedObject
     fileprivate var model: ControllerTimeModel
-    fileprivate var timeFont: Font?
+//    fileprivate var timeFont: Font?
+    @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.verticalSizeClass) private var vSizeClass
+    @Environment(\.sizeCategory) private var sizeCategory
+    fileprivate var timeFont: Font {
+            #if os(tvOS)
+            return .system(size: 30, design: .monospaced)
+            #else
+            // If it's iPad (regular width), use bigger font
+            if hSizeClass == .regular {
+                return .system(size: 22, design: .monospaced)
+            } else {
+                return .system(size: 16, design: .monospaced)
+            }
+            #endif
+        }
     public var body: some View {
         if config.playerLayer?.player.seekable ?? false {
             HStack {
-                Text(model.currentTime.toString(for: .minOrHour)).font(timeFont ?? .caption2.monospacedDigit())
+                Text(model.currentTime.toString(for: .minOrHour)).font(timeFont)
                     .foregroundStyle(Color.white)
                 Slider(value: Binding {
                     Float(model.currentTime)
