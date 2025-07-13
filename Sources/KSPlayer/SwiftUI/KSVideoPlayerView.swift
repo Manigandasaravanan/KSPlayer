@@ -377,105 +377,110 @@ struct VideoControllerView: View {
     fileprivate var showDownloadSubtitle: Bool
     @Environment(\.horizontalSizeClass) private var hSizeClass
     public var body: some View {
-        VStack {
-            #if os(tvOS)
-            Spacer()
-            HStack {
-                Text(title)
-                    .lineLimit(2)
-                    .layoutPriority(3)
-                ProgressView()
-                    .opacity(config.state == .buffering ? 1 : 0)
+        ZStack {
+            Color.black.opacity(0.6)
+                   .cornerRadius(12) // remove if you want square edges
+            VStack {
+#if os(tvOS)
                 Spacer()
-                    .layoutPriority(2)
                 HStack {
-                    Button {
-                        if config.state.isPlaying {
-                            config.playerLayer?.pause()
-                        } else {
-                            config.playerLayer?.play()
+                    Text(title)
+                        .lineLimit(2)
+                        .layoutPriority(3)
+                    ProgressView()
+                        .opacity(config.state == .buffering ? 1 : 0)
+                    Spacer()
+                        .layoutPriority(2)
+                    HStack {
+                        Button {
+                            if config.state.isPlaying {
+                                config.playerLayer?.pause()
+                            } else {
+                                config.playerLayer?.play()
+                            }
+                        } label: {
+                            Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
                         }
-                    } label: {
-                        Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
-                    }
-                    .frame(width: 56)
-                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                        audioButton(audioTracks: audioTracks)
-                    }
-                    muteButton
                         .frame(width: 56)
-//                    loadSubtitleButton
-//                    contentModeButton
-//                        .frame(width: 56)
-                    subtitleButton
-//                    playbackRateButton
-//                    pipButton
-//                        .frame(width: 56)
-//                    infoButton
-//                        .frame(width: 56)
+                        if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                            audioButton(audioTracks: audioTracks)
+                        }
+                        muteButton
+                            .frame(width: 56)
+                        //                    loadSubtitleButton
+                        //                    contentModeButton
+                        //                        .frame(width: 56)
+                        subtitleButton
+                        //                    playbackRateButton
+                        //                    pipButton
+                        //                        .frame(width: 56)
+                        //                    infoButton
+                        //                        .frame(width: 56)
+                    }
+                    .font(.caption)
                 }
-                .font(.caption)
-            }
-            #else
-            HStack {
-                #if !os(xrOS)
-                Button(action: {
-                    KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
-                    dismiss()
-                }) {
-                    Image(systemName: "arrow.backward")
-                        .foregroundColor(.white)
-                        .imageScale(hSizeClass == .regular ? .medium : .small)
-                        .padding()
-                }
-                Spacer()
-                KSVideoPlayerViewBuilder.titleView(title: title, config: config, isIPad: hSizeClass == .regular ? true : false)
-                Spacer()
-                #if !os(tvOS)
-//                if config.playerLayer?.player.allowsExternalPlayback == true {
+#else
+                HStack {
+#if !os(xrOS)
+                    Button(action: {
+                        KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
+                        dismiss()
+                    }) {
+                        Image(systemName: "arrow.backward")
+                            .foregroundColor(.white)
+                            .imageScale(hSizeClass == .regular ? .medium : .small)
+                            .padding()
+                    }
+                    Spacer()
+                    KSVideoPlayerViewBuilder.titleView(title: title, config: config, isIPad: hSizeClass == .regular ? true : false)
+                    Spacer()
+#if !os(tvOS)
+                    //                if config.playerLayer?.player.allowsExternalPlayback == true {
                     
-//                }
-                #endif
-                #endif
-//                Spacer()
-                
-                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                    audioButton(audioTracks: audioTracks, isIpad: hSizeClass == .regular ? true : false)
-                    #if os(xrOS)
-                        .aspectRatio(1, contentMode: .fit)
-                        .glassBackgroundEffect()
-                    #endif
-                }
-                AirPlayView().fixedSize()
-//                lockButton
-//                muteButton
-//                #if !os(xrOS)
-////                contentModeButton
-//                subtitleButton
-//                #endif
-            }
-            Spacer()
-            #if !os(xrOS)
-            KSVideoPlayerViewBuilder.playbackControlView(config: config, isIPad: hSizeClass == .regular ? true : false)
-            Spacer()
-            HStack(spacing: 0) {
-                if showDownloadSubtitle {
-                    loadSubtitleButton
+                    //                }
+#endif
+#endif
+                    //                Spacer()
+                    
+                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                        audioButton(audioTracks: audioTracks, isIpad: hSizeClass == .regular ? true : false)
+#if os(xrOS)
+                            .aspectRatio(1, contentMode: .fit)
+                            .glassBackgroundEffect()
+#endif
+                    }
+                    AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 2.5 : 1.8)
+                    
+                    //                lockButton
+                    //                muteButton
+                    //                #if !os(xrOS)
+                    ////                contentModeButton
+                    //                subtitleButton
+                    //                #endif
                 }
                 Spacer()
-                muteButton
-                    .padding(.trailing, 6)
-                subtitleButton
-            }.padding(.bottom, 8)
-//            HStack {
-//
-//                Spacer()
-////                playbackRateButton
-////                pipButton
-//                infoButton
-//            }
-            #endif
-            #endif
+#if !os(xrOS)
+                KSVideoPlayerViewBuilder.playbackControlView(config: config, isIPad: hSizeClass == .regular ? true : false)
+                Spacer()
+                HStack(spacing: 0) {
+                    if showDownloadSubtitle {
+                        loadSubtitleButton
+                    }
+                    Spacer()
+                    muteButton
+                        .padding(.trailing, 6)
+                    subtitleButton
+                }.padding(.bottom, 8)
+                //            HStack {
+                //
+                //                Spacer()
+                ////                playbackRateButton
+                ////                pipButton
+                //                infoButton
+                //            }
+#endif
+#endif
+            }
         }
         #if !os(tvOS)
         .font(.title)
