@@ -393,6 +393,15 @@ struct VideoControllerView: View {
                         .layoutPriority(2)
                     HStack {
                         Button {
+                            KSPlayerEventBus.onLoadSubtitleTapped?()
+                        } label: {
+                            Text("🌐︎ Download subtitle")
+                                .font(Font(SubtitleModel.textFont))
+                                .foregroundColor(.white)
+                                .padding(8)
+                        }
+                        .frame(width: 180)
+                        Button {
                             if config.state.isPlaying {
                                 config.playerLayer?.pause()
                             } else {
@@ -563,7 +572,7 @@ struct VideoControllerView: View {
         KSVideoPlayerViewBuilder.contentModeButton(config: config)
     }
 
-    private func audioButton(audioTracks: [MediaPlayerTrack], isIpad: Bool) -> some View {
+    private func audioButton(audioTracks: [MediaPlayerTrack], isIpad: Bool = false) -> some View {
         MenuView(selection: Binding {
             audioTracks.first { $0.isEnabled }?.trackID
         } set: { value in
