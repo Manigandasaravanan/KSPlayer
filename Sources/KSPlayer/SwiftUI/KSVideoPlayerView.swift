@@ -379,7 +379,6 @@ struct VideoControllerView: View {
     public var body: some View {
         ZStack {
             Color.black.opacity(0.3)
-                .ignoresSafeArea(.all)
             VStack {
 #if os(tvOS)
                 Spacer()
@@ -483,7 +482,6 @@ struct VideoControllerView: View {
 #endif
             }
         }
-        .ignoresSafeArea(.all) // <- Add here if you still see insets
         #if !os(tvOS)
         .font(.title)
         .buttonStyle(.borderless)
@@ -498,10 +496,17 @@ struct VideoControllerView: View {
             KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Text("🌐︎ Download subtitle")
-                    .font(Font(SubtitleModel.textFont))
-                    .foregroundColor(.white)
-                    .padding(8) // Inner padding
+                if hSizeClass == .regular {
+                    Text("🌐︎ Download subtitle")
+                        .font(.system(size: 18)) // Reduce icon size
+                        .foregroundColor(.white)
+                        .padding(8)
+                } else {
+                    Text("🌐︎ Download subtitle")
+                        .font(Font(SubtitleModel.textFont))
+                        .foregroundColor(.white)
+                        .padding(8)
+                }
             }
             .background(
                 RoundedRectangle(cornerRadius: 8)
