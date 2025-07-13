@@ -87,7 +87,7 @@ enum KSVideoPlayerViewBuilder {
     static func titleView(title: String, config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         HStack {
             Text(title)
-                .font(isIPad ? .largeTitle : .subheadline)
+                .font(isIPad ? .title : .subheadline)
                 .foregroundStyle(Color.white)
             ProgressView()
                 .opacity(config.state == .buffering ? 1 : 0)
@@ -200,7 +200,7 @@ private extension KSVideoPlayerViewBuilder {
     }
 
     @MainActor
-    static func playButton(config: KSVideoPlayer.Coordinator) -> some View {
+    static func playButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         Button {
             if config.state.isPlaying {
                 config.playerLayer?.pause()
@@ -209,7 +209,8 @@ private extension KSVideoPlayerViewBuilder {
             }
         } label: {
             Image(systemName: config.state == .error ? "play.fill" : (config.state.isPlaying ? pauseSystemName : playSystemName))
-                .font(.system(size: 38)) // Reduce icon size
+                .font(.system(size: isIPad ? 56 : 44)) // Reduce icon size
+                .foregroundStyle(Color.init(hex: "baff2a"))
         }
         #if os(xrOS)
         .contentTransition(.symbolEffect(.replace))
@@ -217,5 +218,53 @@ private extension KSVideoPlayerViewBuilder {
         #if !os(tvOS)
         .keyboardShortcut(.space, modifiers: .none)
         #endif
+    }
+}
+
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17,
+                            (int >> 4 & 0xF) * 17,
+                            (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16,
+                            int >> 8 & 0xFF,
+                            int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24,
+                            int >> 16 & 0xFF,
+                            int >> 8 & 0xFF,
+                            int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+    
+    /// Blends the color with white by the given percentage (0.0 - 1.0)
+    func blendWhite(_ percentage: CGFloat) -> Color {
+        let uiColor = UIColor(self)
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        let blendedR = r + (1.0 - r) * percentage
+        let blendedG = g + (1.0 - g) * percentage
+        let blendedB = b + (1.0 - b) * percentage
+        
+        return Color(red: blendedR, green: blendedG, blue: blendedB)
     }
 }
