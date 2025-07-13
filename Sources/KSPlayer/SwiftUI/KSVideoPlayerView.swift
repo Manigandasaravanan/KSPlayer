@@ -547,7 +547,7 @@ struct VideoControllerView: View {
         }) {
             HStack(spacing: 0) {
                 Image("chrome-cast")
-                    .font(.system(size: hSizeClass == .regular ? 26 : 18)) // Reduce icon size
+                    .font(.system(size: hSizeClass == .regular ? 6 : 18)) // Reduce icon size
                     .padding(8) // Adjust padding to keep the circle neat
                     .background(
                         Circle()
