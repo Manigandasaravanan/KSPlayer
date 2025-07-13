@@ -391,7 +391,7 @@ struct VideoControllerView: View {
                         .opacity(config.state == .buffering ? 1 : 0)
                     Spacer()
                         .layoutPriority(2)
-                    HStack {
+                    HStack(spacing: 16) {
                         Button {
                             isDowloadSubtitleFocused = false
                             KSPlayerEventBus.onLoadSubtitleTapped?()
@@ -400,7 +400,7 @@ struct VideoControllerView: View {
                                 .font(.caption)
                                 .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
                                 .padding(8)
-                                .frame(width: 250)
+                                .frame(width: 300)
                         }.focused($isDowloadSubtitleFocused)
                         Button {
                             if config.state.isPlaying {
@@ -421,15 +421,14 @@ struct VideoControllerView: View {
                         }
                         muteButton
                             .font(.caption)
-                            .padding(8)
-                            .frame(width: 56)
+//                            .padding(8)
+//                            .frame(width: 56)
                         //                    loadSubtitleButton
                         //                    contentModeButton
                         //                        .frame(width: 56)
                         subtitleButton
                             .font(.caption)
-                            .padding(8)
-                            .frame(width: 56)
+//                            .padding(8)
                         //                    playbackRateButton
                         //                    pipButton
                         //                        .frame(width: 56)
