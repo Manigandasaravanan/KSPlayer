@@ -156,6 +156,14 @@ private extension KSVideoPlayerViewBuilder {
         "speaker.slash.fill"
         #endif
     }
+    
+    static var chromecastSystemName: String {
+        #if os(xrOS)
+        "chrome-cast"
+        #else
+        "chrome-cast"
+        #endif
+    }
 
     @MainActor
     @ViewBuilder

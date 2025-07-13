@@ -449,6 +449,8 @@ struct VideoControllerView: View {
                             .glassBackgroundEffect()
 #endif
                     }
+                    chromecaseButton
+                        .padding(.trailing, 6)
                     AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 1.2 : 1.0)
                     
                     //                lockButton
@@ -537,6 +539,31 @@ struct VideoControllerView: View {
         #else
         KSVideoPlayerViewBuilder.muteButton(config: config, isIPad: hSizeClass == .regular ? true : false)
         #endif
+    }
+    
+    private var chromecaseButton: some View {
+        Button(action: {
+            KSPlayerEventBus.onLoadSubtitleTapped?()
+        }) {
+            HStack(spacing: 0) {
+                Image("chrome-cast")
+                    .font(.system(size: hSizeClass == .regular ? 26 : 18)) // Reduce icon size
+                    .padding(8) // Adjust padding to keep the circle neat
+                    .background(
+                        Circle()
+                            .fill(Color.black.opacity(0.5)) // Black transparent background
+                    )
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.black.opacity(0.2)) // Transparent black background
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.white, lineWidth: 1) // White border
+            )
+        }
+        .padding(.horizontal)
     }
 
     private var contentModeButton: some View {
