@@ -378,8 +378,8 @@ struct VideoControllerView: View {
     @Environment(\.horizontalSizeClass) private var hSizeClass
     public var body: some View {
         ZStack {
-            Color.black.opacity(0.1)
-                .ignoresSafeArea()
+            Color.black.opacity(0.3)
+                .ignoresSafeArea(.all)
             VStack {
 #if os(tvOS)
                 Spacer()
@@ -483,7 +483,7 @@ struct VideoControllerView: View {
 #endif
             }
         }
-        .ignoresSafeArea()
+        .ignoresSafeArea(.all) // <- Add here if you still see insets
         #if !os(tvOS)
         .font(.title)
         .buttonStyle(.borderless)
