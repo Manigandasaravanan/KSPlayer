@@ -378,7 +378,7 @@ struct VideoControllerView: View {
     @Environment(\.horizontalSizeClass) private var hSizeClass
     public var body: some View {
         ZStack {
-            Color.black.opacity(0.8)
+            Color.black.opacity(0.1)
                 .ignoresSafeArea()
             VStack {
 #if os(tvOS)
@@ -483,6 +483,7 @@ struct VideoControllerView: View {
 #endif
             }
         }
+        .ignoresSafeArea()
         #if !os(tvOS)
         .font(.title)
         .buttonStyle(.borderless)
