@@ -420,15 +420,16 @@ struct VideoControllerView: View {
                                 .padding(8)
                         }
                         muteButton
-                            .font(.caption)
+//                            .font(.caption)
 //                            .padding(8)
 //                            .frame(width: 56)
                         //                    loadSubtitleButton
                         //                    contentModeButton
                         //                        .frame(width: 56)
                         subtitleButton
-                            .font(.caption)
+//                            .font(.caption)
 //                            .padding(8)
+//                            .frame(width: 56)
                         //                    playbackRateButton
                         //                    pipButton
                         //                        .frame(width: 56)
