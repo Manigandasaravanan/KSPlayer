@@ -11,7 +11,7 @@ import SwiftUI
 public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
     public static var onCloseVideoTapped: ((Int) -> Void)? = nil
-    public static var onOpenChromecastTapped: (() -> Void)? = nil
+//    public static var onOpenChromecastTapped: (() -> Void)? = nil
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
@@ -450,8 +450,8 @@ struct VideoControllerView: View {
                             .glassBackgroundEffect()
 #endif
                     }
-                    chromecaseButton
-                        .padding(.trailing, 6)
+//                    chromecaseButton
+//                        .padding(.trailing, 6)
                     AirPlayView().fixedSize().scaleEffect(hSizeClass == .regular ? 1.2 : 1.0)
                     
                     //                lockButton
@@ -542,22 +542,22 @@ struct VideoControllerView: View {
         #endif
     }
     
-    private var chromecaseButton: some View {
-        Button(action: {
-            KSPlayerEventBus.onOpenChromecastTapped?()
-        }) {
-            Image("chrome-cast", bundle: .module)
-                .renderingMode(.template)
-                .foregroundStyle(Color.white)
-                .font(.system(size: hSizeClass == .regular ? 18 : 18)) // Reduce icon size
-                .padding(8) // Adjust padding to keep the circle neat
-                .background(
-                    Circle()
-                        .fill(Color.black.opacity(0.5)) // Black transparent background
-                )
-        }
-        .padding(.horizontal)
-    }
+//    private var chromecaseButton: some View {
+//        Button(action: {
+//            KSPlayerEventBus.onOpenChromecastTapped?()
+//        }) {
+//            Image("chrome-cast", bundle: .module)
+//                .renderingMode(.template)
+//                .foregroundStyle(Color.white)
+//                .font(.system(size: hSizeClass == .regular ? 18 : 18)) // Reduce icon size
+//                .padding(8) // Adjust padding to keep the circle neat
+//                .background(
+//                    Circle()
+//                        .fill(Color.black.opacity(0.5)) // Black transparent background
+//                )
+//        }
+//        .padding(.horizontal)
+//    }
 
     private var contentModeButton: some View {
         KSVideoPlayerViewBuilder.contentModeButton(config: config)
