@@ -26,7 +26,8 @@ let package = Package(
 //                .product(name: "Libmpv", package: "FFmpegKit"),
                 "DisplayCriteria",
             ],
-            resources: [.process("Metal/Shaders.metal")],
+            resources: [.process("Metal/Shaders.metal"),
+                        .process("KSPlayerAssets.xcassets")],
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency"),
             ]

@@ -543,11 +543,11 @@ struct VideoControllerView: View {
     
     private var chromecaseButton: some View {
         Button(action: {
-            KSPlayerEventBus.onLoadSubtitleTapped?()
+//            KSPlayerEventBus.onLoadSubtitleTapped?()
         }) {
             HStack(spacing: 0) {
-                Image("chrome-cast")
-                    .font(.system(size: hSizeClass == .regular ? 6 : 18)) // Reduce icon size
+                Image("chrome-cast", bundle: .module)
+                    .font(.system(size: hSizeClass == .regular ? 18 : 18)) // Reduce icon size
                     .padding(8) // Adjust padding to keep the circle neat
                     .background(
                         Circle()
