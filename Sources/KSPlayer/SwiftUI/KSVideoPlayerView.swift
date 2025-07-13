@@ -391,17 +391,17 @@ struct VideoControllerView: View {
                         .opacity(config.state == .buffering ? 1 : 0)
                     Spacer()
                         .layoutPriority(2)
+                    Button {
+                        isDowloadSubtitleFocused = false
+                        KSPlayerEventBus.onLoadSubtitleTapped?()
+                    } label: {
+                        Text("🌐︎ Download subtitle")
+                            .font(.caption)
+                            .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
+                            .padding(8)
+                            .frame(width: 300)
+                    }.focused($isDowloadSubtitleFocused)
                     HStack {
-                        Button {
-                            isDowloadSubtitleFocused = false
-                            KSPlayerEventBus.onLoadSubtitleTapped?()
-                        } label: {
-                            Text("🌐︎ Download subtitle")
-                                .font(.caption)
-                                .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
-                                .padding(8)
-                                .frame(width: 300)
-                        }.focused($isDowloadSubtitleFocused)
                         Button {
                             if config.state.isPlaying {
                                 config.playerLayer?.pause()
@@ -436,7 +436,7 @@ struct VideoControllerView: View {
                         //                    infoButton
                         //                        .frame(width: 56)
                     }
-                    .font(.caption)
+//                    .font(.caption)
                 }
 #else
                 Color.black.opacity(0.3)
