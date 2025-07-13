@@ -444,6 +444,7 @@ struct VideoControllerView: View {
                     
                     if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                         audioButton(audioTracks: audioTracks, isIpad: hSizeClass == .regular ? true : false)
+                            .padding(.trailing, 6)
 #if os(xrOS)
                             .aspectRatio(1, contentMode: .fit)
                             .glassBackgroundEffect()
