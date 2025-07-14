@@ -236,41 +236,58 @@ public struct KSVideoPlayerView: View {
     }
 
     private func controllerView(playerWidth: Double) -> some View {
-        VStack {
-            VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4, showDownloadSubtitle: $showDownloadSubtitle)
-#if !os(xrOS)
-            // 设置opacity为0，还是会去更新View。所以只能这样了
+        ZStack {
+            // 🔴 Thin black transparent layer when mask is shown (no interaction)
             if playerCoordinator.isMaskShow {
-                VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
-                    .onAppear {
-                        focusableField = .controller
-                    }
-                    .onDisappear {
-                        focusableField = .play
-                    }
+                Color.black.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
+                    .allowsHitTesting(false) // ✅ does NOT block taps
             }
-#endif
-        }
-#if os(xrOS)
-        .ornament(visibility: playerCoordinator.isMaskShow ? .visible : .hidden, attachmentAnchor: .scene(.bottom)) {
-            ornamentView(playerWidth: playerWidth)
-        }
-        .sheet(isPresented: $showVideoSetting) {
-            NavigationStack {
-                VideoSettingView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, subtitleTitle: title)
+
+            VStack {
+                VideoControllerView(
+                    config: playerCoordinator,
+                    subtitleModel: playerCoordinator.subtitleModel,
+                    title: $title,
+                    volumeSliderSize: playerWidth / 4,
+                    showDownloadSubtitle: $showDownloadSubtitle
+                )
+    #if !os(xrOS)
+                if playerCoordinator.isMaskShow {
+                    VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
+                        .onAppear { focusableField = .controller }
+                        .onDisappear { focusableField = .play }
+                }
+    #endif
             }
-            .buttonStyle(.plain)
+    #if os(xrOS)
+            .ornament(
+                visibility: playerCoordinator.isMaskShow ? .visible : .hidden,
+                attachmentAnchor: .scene(.bottom)
+            ) {
+                ornamentView(playerWidth: playerWidth)
+            }
+            .sheet(isPresented: $showVideoSetting) {
+                NavigationStack {
+                    VideoSettingView(
+                        config: playerCoordinator,
+                        subtitleModel: playerCoordinator.subtitleModel,
+                        subtitleTitle: title
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+    #elseif os(tvOS)
+            .padding(.horizontal, 80)
+            .padding(.bottom, 80)
+            .background(overlayGradient)
+    #endif
+            .focused($focusableField, equals: .controller)
+            .opacity(playerCoordinator.isMaskShow ? 1 : 0)
+            .padding()
         }
-#elseif os(tvOS)
-        .padding(.horizontal, 80)
-        .padding(.bottom, 80)
-        .background(overlayGradient)
-#endif
-        .focused($focusableField, equals: .controller)
-        .opacity(playerCoordinator.isMaskShow ? 1 : 0)
-        .background(overlayGradient)
-        .padding()
     }
+
 
     private let overlayGradient = LinearGradient(
         stops: [
