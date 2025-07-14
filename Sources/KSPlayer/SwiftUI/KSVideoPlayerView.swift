@@ -236,43 +236,40 @@ public struct KSVideoPlayerView: View {
     }
 
     private func controllerView(playerWidth: Double) -> some View {
-        ZStack {
-            Color.black.opacity(0.3)
-                .ignoresSafeArea()
-            VStack {
-                VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4, showDownloadSubtitle: $showDownloadSubtitle)
-                #if !os(xrOS)
-                // 设置opacity为0，还是会去更新View。所以只能这样了
-                if playerCoordinator.isMaskShow {
-                    VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
-                        .onAppear {
-                            focusableField = .controller
-                        }
-                        .onDisappear {
-                            focusableField = .play
-                        }
-                }
-                #endif
+        VStack {
+            VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4, showDownloadSubtitle: $showDownloadSubtitle)
+#if !os(xrOS)
+            // 设置opacity为0，还是会去更新View。所以只能这样了
+            if playerCoordinator.isMaskShow {
+                VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
+                    .onAppear {
+                        focusableField = .controller
+                    }
+                    .onDisappear {
+                        focusableField = .play
+                    }
             }
-            #if os(xrOS)
-            .ornament(visibility: playerCoordinator.isMaskShow ? .visible : .hidden, attachmentAnchor: .scene(.bottom)) {
-                ornamentView(playerWidth: playerWidth)
-            }
-            .sheet(isPresented: $showVideoSetting) {
-                NavigationStack {
-                    VideoSettingView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, subtitleTitle: title)
-                }
-                .buttonStyle(.plain)
-            }
-            #elseif os(tvOS)
-            .padding(.horizontal, 80)
-            .padding(.bottom, 80)
-            .background(overlayGradient)
-            #endif
-            .focused($focusableField, equals: .controller)
-            .opacity(playerCoordinator.isMaskShow ? 1 : 0)
-            .padding()
+#endif
         }
+#if os(xrOS)
+        .ornament(visibility: playerCoordinator.isMaskShow ? .visible : .hidden, attachmentAnchor: .scene(.bottom)) {
+            ornamentView(playerWidth: playerWidth)
+        }
+        .sheet(isPresented: $showVideoSetting) {
+            NavigationStack {
+                VideoSettingView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, subtitleTitle: title)
+            }
+            .buttonStyle(.plain)
+        }
+#elseif os(tvOS)
+        .padding(.horizontal, 80)
+        .padding(.bottom, 80)
+        .background(overlayGradient)
+#endif
+        .focused($focusableField, equals: .controller)
+        .opacity(playerCoordinator.isMaskShow ? 1 : 0)
+        .background(overlayGradient)
+        .padding()
     }
 
     private let overlayGradient = LinearGradient(
