@@ -236,39 +236,43 @@ public struct KSVideoPlayerView: View {
     }
 
     private func controllerView(playerWidth: Double) -> some View {
-        VStack {
-            VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4, showDownloadSubtitle: $showDownloadSubtitle)
-            #if !os(xrOS)
-            // 设置opacity为0，还是会去更新View。所以只能这样了
-            if playerCoordinator.isMaskShow {
-                VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
-                    .onAppear {
-                        focusableField = .controller
-                    }
-                    .onDisappear {
-                        focusableField = .play
-                    }
+        ZStack {
+            Color.black.opacity(0.3)
+                .ignoresSafeArea()
+            VStack {
+                VideoControllerView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, title: $title, volumeSliderSize: playerWidth / 4, showDownloadSubtitle: $showDownloadSubtitle)
+                #if !os(xrOS)
+                // 设置opacity为0，还是会去更新View。所以只能这样了
+                if playerCoordinator.isMaskShow {
+                    VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
+                        .onAppear {
+                            focusableField = .controller
+                        }
+                        .onDisappear {
+                            focusableField = .play
+                        }
+                }
+                #endif
             }
+            #if os(xrOS)
+            .ornament(visibility: playerCoordinator.isMaskShow ? .visible : .hidden, attachmentAnchor: .scene(.bottom)) {
+                ornamentView(playerWidth: playerWidth)
+            }
+            .sheet(isPresented: $showVideoSetting) {
+                NavigationStack {
+                    VideoSettingView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, subtitleTitle: title)
+                }
+                .buttonStyle(.plain)
+            }
+            #elseif os(tvOS)
+            .padding(.horizontal, 80)
+            .padding(.bottom, 80)
+            .background(overlayGradient)
             #endif
+            .focused($focusableField, equals: .controller)
+            .opacity(playerCoordinator.isMaskShow ? 1 : 0)
+            .padding()
         }
-        #if os(xrOS)
-        .ornament(visibility: playerCoordinator.isMaskShow ? .visible : .hidden, attachmentAnchor: .scene(.bottom)) {
-            ornamentView(playerWidth: playerWidth)
-        }
-        .sheet(isPresented: $showVideoSetting) {
-            NavigationStack {
-                VideoSettingView(config: playerCoordinator, subtitleModel: playerCoordinator.subtitleModel, subtitleTitle: title)
-            }
-            .buttonStyle(.plain)
-        }
-        #elseif os(tvOS)
-        .padding(.horizontal, 80)
-        .padding(.bottom, 80)
-        .background(overlayGradient)
-        #endif
-        .focused($focusableField, equals: .controller)
-        .opacity(playerCoordinator.isMaskShow ? 1 : 0)
-        .padding()
     }
 
     private let overlayGradient = LinearGradient(
@@ -379,128 +383,124 @@ struct VideoControllerView: View {
 //    @Environment(\.horizontalSizeClass) private var hSizeClass
     @FocusState private var isDowloadSubtitleFocused
     public var body: some View {
-        ZStack {
-#if !os(tvOS)
-            Color.black.opacity(0.3)
-#endif
-            VStack {
+        VStack {
 #if os(tvOS)
+            Spacer()
+            HStack {
+                Text(title)
+                    .lineLimit(2)
+                    .layoutPriority(3)
+                ProgressView()
+                    .opacity(config.state == .buffering ? 1 : 0)
                 Spacer()
-                HStack {
-                    Text(title)
-                        .lineLimit(2)
-                        .layoutPriority(3)
-                    ProgressView()
-                        .opacity(config.state == .buffering ? 1 : 0)
-                    Spacer()
-                        .layoutPriority(2)
-                    Button {
-                        isDowloadSubtitleFocused = false
-                        KSPlayerEventBus.onLoadSubtitleTapped?()
-                    } label: {
-                        Text("🌐︎ Download subtitle")
-                            .font(.caption)
-                            .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
-                            .padding(8)
-                            .frame(width: 300)
-                    }.focused($isDowloadSubtitleFocused)
-                    HStack {
-                        Button {
-                            if config.state.isPlaying {
-                                config.playerLayer?.pause()
-                            } else {
-                                config.playerLayer?.play()
-                            }
-                        } label: {
-                            Image(systemName: config.state == .error ? "play.slash.fill" : (config.state.isPlaying ? "pause.fill" : "play.fill"))
-                                .font(.caption)
-                                .padding(8)
-                        }
-                        .frame(width: 56)
-                        if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                            audioButton(audioTracks: audioTracks)
-                                .font(.caption)
-                                .padding(8)
-                        }
-                        muteButton
-                            .frame(width: 56)
-                        subtitleButton
-                    }
+                    .layoutPriority(2)
+                Button {
+                    isDowloadSubtitleFocused = false
+                    KSPlayerEventBus.onLoadSubtitleTapped?()
+                } label: {
+                    Text("🌐︎ Download subtitle")
+                        .font(.caption)
+                        .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
+                        .padding(8)
+                        .frame(width: 300)
                 }
-#else
+                .focused($isDowloadSubtitleFocused)
+                
                 HStack {
-#if !os(xrOS)
-                    Button(action: {
-                        KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
-                        dismiss()
-                    }) {
-                        Image(systemName: "arrow.backward")
-                            .foregroundColor(.white)
-                            .imageScale(UIDevice.current.userInterfaceIdiom == .pad ? .medium : .small)
-                            .padding()
+                    Button {
+                        if config.state.isPlaying {
+                            config.playerLayer?.pause()
+                        } else {
+                            config.playerLayer?.play()
+                        }
+                    } label: {
+                        Image(systemName: config.state == .error ? "play.slash.fill" :
+                                (config.state.isPlaying ? "pause.fill" : "play.fill"))
+                        .font(.caption)
+                        .padding(8)
                     }
-                    Spacer()
-                    KSVideoPlayerViewBuilder.titleView(title: title, config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad ?  true : false)
-                    Spacer()
-#if !os(tvOS)
-                    //                if config.playerLayer?.player.allowsExternalPlayback == true {
-                    
-                    //                }
-#endif
-#endif
-                    //                Spacer()
+                    .frame(width: 56)
                     
                     if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                        audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad ? true : false)
-                            .padding(.trailing, 6)
-#if os(xrOS)
-                            .aspectRatio(1, contentMode: .fit)
-                            .glassBackgroundEffect()
-#endif
+                        audioButton(audioTracks: audioTracks)
+                            .font(.caption)
+                            .padding(8)
                     }
-//                    chromecaseButton
-//                        .padding(.trailing, 6)
-                    AirPlayView().fixedSize().scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
                     
-                    //                lockButton
-                    //                muteButton
-                    //                #if !os(xrOS)
-                    ////                contentModeButton
-                    //                subtitleButton
-                    //                #endif
+                    muteButton.frame(width: 56)
+                    subtitleButton
+                }
+            }
+#else // non-tvOS
+            HStack {
+#if !os(xrOS)
+                Button(action: {
+                    KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
+                    dismiss()
+                }) {
+                    Image(systemName: "arrow.backward")
+                        .foregroundColor(.white)
+                        .imageScale(UIDevice.current.userInterfaceIdiom == .pad ? .medium : .small)
+                        .padding()
                 }
                 Spacer()
-#if !os(xrOS)
-                KSVideoPlayerViewBuilder.playbackControlView(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad ? true : false)
+                
+                KSVideoPlayerViewBuilder.titleView(
+                    title: title,
+                    config: config,
+                    isIPad: UIDevice.current.userInterfaceIdiom == .pad
+                )
                 Spacer()
-                HStack(spacing: 0) {
-                    if showDownloadSubtitle {
-                        loadSubtitleButton
-                    }
-                    Spacer()
-                    muteButton
+#endif
+                
+                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                    audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
                         .padding(.trailing, 6)
-                    subtitleButton
-                }.padding(.bottom, 8)
-                //            HStack {
-                //
-                //                Spacer()
-                ////                playbackRateButton
-                ////                pipButton
-                //                infoButton
-                //            }
+#if os(xrOS)
+                        .aspectRatio(1, contentMode: .fit)
+                        .glassBackgroundEffect()
 #endif
-#endif
+                }
+                
+                AirPlayView()
+                    .fixedSize()
+                    .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
             }
+            
+            Spacer()
+            
+#if !os(xrOS)
+            KSVideoPlayerViewBuilder.playbackControlView(
+                config: config,
+                isIPad: UIDevice.current.userInterfaceIdiom == .pad
+            )
+            Spacer()
+            
+            HStack(spacing: 0) {
+                if showDownloadSubtitle {
+                    loadSubtitleButton
+                }
+                Spacer()
+                muteButton.padding(.trailing, 6)
+                subtitleButton
+            }
+            .padding(.bottom, 8)
+#endif
+#endif
         }
-        #if !os(tvOS)
+#if !os(tvOS)
         .font(.title)
         .buttonStyle(.borderless)
-        #endif
+#endif
         .sheet(isPresented: $showVideoSetting) {
-            VideoSettingView(config: config, subtitleModel: config.subtitleModel, subtitleTitle: title)
+            VideoSettingView(
+                config: config,
+                subtitleModel: config.subtitleModel,
+                subtitleTitle: title
+            )
         }
     }
+
     
     private var loadSubtitleButton: some View {
         Button(action: {
