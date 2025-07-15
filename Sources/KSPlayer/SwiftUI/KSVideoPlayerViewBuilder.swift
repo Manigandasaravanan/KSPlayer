@@ -35,9 +35,10 @@ enum KSVideoPlayerViewBuilder {
             config.isScaleAspectFill.toggle()
         } label: {
             Image(config.isScaleAspectFill ? "minimize-02" : "maximize-02", bundle: .module)
+                .resizable()
                 .renderingMode(.template)
                 .foregroundStyle(Color.white)
-                .font(.system(size: isIPad ? 24 : 12)) // Reduce icon size
+                .font(.system(size: isIPad ? 24 : 14)) // Reduce icon size
                 .padding(8)
                 .background(
                     Circle()
