@@ -34,7 +34,16 @@ enum KSVideoPlayerViewBuilder {
         Button {
             config.isScaleAspectFill.toggle()
         } label: {
-            Image(systemName: config.isScaleAspectFill ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward")
+            Image(config.isScaleAspectFill ? "minimize-02" : "maximize-02", bundle: .module)
+                .renderingMode(.template)
+                .foregroundStyle(Color.white)
+                .font(.system(size: 18)) // Reduce icon size
+                .padding(8) 
+                .background(
+                    Circle()
+                        .fill(Color.black.opacity(0.5)) // Black transparent background
+                )
+//            Image(systemName: config.isScaleAspectFill ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward")
         }
     }
 

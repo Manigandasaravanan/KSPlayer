@@ -497,6 +497,7 @@ struct VideoControllerView: View {
                 Spacer()
                 muteButton.padding(.trailing, 6)
                 subtitleButton
+                KSVideoPlayerViewBuilder.contentModeButton(config: playerCoordinator)
             }
             .padding(.bottom, 8)
 #endif
