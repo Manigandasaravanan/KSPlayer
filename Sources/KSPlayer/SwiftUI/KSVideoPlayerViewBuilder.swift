@@ -30,14 +30,14 @@ enum KSVideoPlayerViewBuilder {
     }
 
     @MainActor
-    static func contentModeButton(config: KSVideoPlayer.Coordinator) -> some View {
+    static func contentModeButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
         Button {
             config.isScaleAspectFill.toggle()
         } label: {
             Image(config.isScaleAspectFill ? "minimize-02" : "maximize-02", bundle: .module)
                 .renderingMode(.template)
                 .foregroundStyle(Color.white)
-                .font(.system(size: 18)) // Reduce icon size
+                .font(.system(size: isIPad ? 24 : 18)) // Reduce icon size
                 .padding(8) 
                 .background(
                     Circle()
@@ -116,7 +116,7 @@ enum KSVideoPlayerViewBuilder {
                         .fill(Color.black.opacity(0.5)) // Black transparent background
                 )
         }
-        .shadow(color: .black, radius: 1)
+//        .shadow(color: .black, radius: 1)
     }
 
     static func infoButton(showVideoSetting: Binding<Bool>) -> some View {
