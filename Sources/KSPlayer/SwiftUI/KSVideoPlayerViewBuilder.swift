@@ -37,8 +37,8 @@ enum KSVideoPlayerViewBuilder {
             Image(config.isScaleAspectFill ? "minimize-02" : "maximize-02", bundle: .module)
                 .renderingMode(.template)
                 .foregroundStyle(Color.white)
-                .font(.system(size: isIPad ? 24 : 14)) // Reduce icon size
-                .padding(2)
+                .font(.system(size: isIPad ? 24 : 12)) // Reduce icon size
+                .padding(8)
                 .background(
                     Circle()
                         .fill(Color.black.opacity(0.5)) // Black transparent background
