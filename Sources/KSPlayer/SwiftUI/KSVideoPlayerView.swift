@@ -497,7 +497,7 @@ struct VideoControllerView: View {
                 Spacer()
                 muteButton.padding(.trailing, 6)
                 subtitleButton.padding(.trailing, 6)
-                KSVideoPlayerViewBuilder.contentModeButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad)
+                contentModeButton
             }
             .padding(.bottom, 8)
 #endif
@@ -565,6 +565,25 @@ struct VideoControllerView: View {
         #endif
     }
     
+//    private var contentModeButton: some View {
+//        #if os(xrOS)
+//        HStack {
+//            Slider(value: $config.playbackVolume, in: 0 ... 1)
+//                .onChange(of: config.playbackVolume) { _, newValue in
+//                    config.isMuted = newValue == 0
+//                }
+//                .frame(width: volumeSliderSize ?? 100)
+//                .tint(.white.opacity(0.8))
+//                .padding(.leading, 16)
+//            KSVideoPlayerViewBuilder.muteButton(config: config)
+//        }
+//        .padding(16)
+//        .glassBackgroundEffect()
+//        #else
+//        KSVideoPlayerViewBuilder.contentModeButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad)
+//        #endif
+//    }
+    
 //    private var chromecaseButton: some View {
 //        Button(action: {
 //            KSPlayerEventBus.onOpenChromecastTapped?()
@@ -583,7 +602,7 @@ struct VideoControllerView: View {
 //    }
 
     private var contentModeButton: some View {
-        KSVideoPlayerViewBuilder.contentModeButton(config: config)
+        KSVideoPlayerViewBuilder.contentModeButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad)
     }
 
     private func audioButton(audioTracks: [MediaPlayerTrack], isIpad: Bool = false) -> some View {
