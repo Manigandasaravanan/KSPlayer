@@ -47,16 +47,19 @@ public struct KSVideoPlayerView: View {
     
     @State
     public var showDownloadSubtitle: Bool
+    
+    @State
+    public var isPreview: Bool = false
 
-    public init(url: URL, options: KSOptions, title: String? = nil, showDownloadSubtitle: Bool = false) {
-        self.init(coordinator: KSVideoPlayer.Coordinator(), url: url, options: options, title: title, subtitleDataSouce: nil, showDownloadSubtitle: showDownloadSubtitle)
+    public init(url: URL, options: KSOptions, title: String? = nil, showDownloadSubtitle: Bool = false, isPreview: Bool = false) {
+        self.init(coordinator: KSVideoPlayer.Coordinator(), url: url, options: options, title: title, subtitleDataSouce: nil, showDownloadSubtitle: showDownloadSubtitle, isPreview: isPreview)
     }
 
-    public init(coordinator: KSVideoPlayer.Coordinator, url: URL, options: KSOptions, title: String? = nil, subtitleDataSouce: SubtitleDataSouce? = nil, showDownloadSubtitle: Bool = false) {
-        self.init(coordinator: coordinator, url: .init(wrappedValue: url), options: options, title: .init(wrappedValue: title ?? url.lastPathComponent), subtitleDataSouce: subtitleDataSouce, showDownloadSubtitle: showDownloadSubtitle)
+    public init(coordinator: KSVideoPlayer.Coordinator, url: URL, options: KSOptions, title: String? = nil, subtitleDataSouce: SubtitleDataSouce? = nil, showDownloadSubtitle: Bool = false, isPreview: Bool = false) {
+        self.init(coordinator: coordinator, url: .init(wrappedValue: url), options: options, title: .init(wrappedValue: title ?? url.lastPathComponent), subtitleDataSouce: subtitleDataSouce, showDownloadSubtitle: showDownloadSubtitle, isPreview: isPreview)
     }
 
-    public init(coordinator: KSVideoPlayer.Coordinator, url: State<URL>, options: KSOptions, title: State<String>, subtitleDataSouce: SubtitleDataSouce?, showDownloadSubtitle: Bool = false) {
+    public init(coordinator: KSVideoPlayer.Coordinator, url: State<URL>, options: KSOptions, title: State<String>, subtitleDataSouce: SubtitleDataSouce?, showDownloadSubtitle: Bool = false, isPreview: Bool = false) {
         _url = url
         _playerCoordinator = .init(wrappedValue: coordinator)
         _title = title
@@ -66,6 +69,7 @@ public struct KSVideoPlayerView: View {
         self.options = options
         self.subtitleDataSouce = subtitleDataSouce
         self.showDownloadSubtitle = showDownloadSubtitle
+        self.isPreview = isPreview
     }
 
     public var body: some View {
@@ -394,6 +398,9 @@ struct VideoControllerView: View {
     private var dismiss
     @Binding
     fileprivate var showDownloadSubtitle: Bool
+    
+    @Binding
+    fileprivate var isPreview: Bool
 //    @Environment(\.horizontalSizeClass) private var hSizeClass
     @FocusState private var isDowloadSubtitleFocused
     public var body: some View {
@@ -448,14 +455,16 @@ struct VideoControllerView: View {
 #else // non-tvOS
             HStack {
 #if !os(xrOS)
-                Button(action: {
-                    KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
-                    dismiss()
-                }) {
-                    Image(systemName: "arrow.backward")
-                        .foregroundColor(.white)
-                        .imageScale(UIDevice.current.userInterfaceIdiom == .pad ? .medium : .small)
-                        .padding()
+                if !isPreview {
+                    Button(action: {
+                        KSPlayerEventBus.onCloseVideoTapped?(config.timemodel.currentTime)
+                        dismiss()
+                    }) {
+                        Image(systemName: "arrow.backward")
+                            .foregroundColor(.white)
+                            .imageScale(UIDevice.current.userInterfaceIdiom == .pad ? .medium : .small)
+                            .padding()
+                    }
                 }
                 Spacer()
                 
@@ -465,39 +474,44 @@ struct VideoControllerView: View {
                     isIPad: UIDevice.current.userInterfaceIdiom == .pad
                 )
                 Spacer()
+                    
 #endif
-                
-                if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                    audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
-                        .padding(.trailing, 6)
+                if !isPreview {
+                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                        audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
+                            .padding(.trailing, 6)
+                        
 #if os(xrOS)
-                        .aspectRatio(1, contentMode: .fit)
-                        .glassBackgroundEffect()
+                            .aspectRatio(1, contentMode: .fit)
+                            .glassBackgroundEffect()
 #endif
+                    }
+                    
+                    AirPlayView()
+                        .fixedSize()
+                        .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
                 }
-                
-                AirPlayView()
-                    .fixedSize()
-                    .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
             }
             
             Spacer()
             
 #if !os(xrOS)
-            KSVideoPlayerViewBuilder.playbackControlView(
-                config: config,
-                isIPad: UIDevice.current.userInterfaceIdiom == .pad
-            )
-            Spacer()
-            
-            HStack(spacing: 0) {
-                if showDownloadSubtitle {
-                    loadSubtitleButton
-                }
+            if !isPreview {
+                KSVideoPlayerViewBuilder.playbackControlView(
+                    config: config,
+                    isIPad: UIDevice.current.userInterfaceIdiom == .pad
+                )
                 Spacer()
-                muteButton.padding(.trailing, 6)
-                subtitleButton.padding(.trailing, 6)
-                contentModeButton
+                
+                HStack(spacing: 0) {
+                    if showDownloadSubtitle {
+                        loadSubtitleButton
+                    }
+                    Spacer()
+                    muteButton.padding(.trailing, 6)
+                    subtitleButton.padding(.trailing, 6)
+                    contentModeButton
+                }
             }
             .padding(.bottom, 8)
 #endif
