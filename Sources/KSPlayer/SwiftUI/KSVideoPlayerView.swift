@@ -254,7 +254,8 @@ public struct KSVideoPlayerView: View {
                     subtitleModel: playerCoordinator.subtitleModel,
                     title: $title,
                     volumeSliderSize: playerWidth / 4,
-                    showDownloadSubtitle: $showDownloadSubtitle
+                    showDownloadSubtitle: $showDownloadSubtitle,
+                    isPreview: $isPreview
                 )
     #if !os(xrOS)
                 if playerCoordinator.isMaskShow {
@@ -511,9 +512,9 @@ struct VideoControllerView: View {
                     muteButton.padding(.trailing, 6)
                     subtitleButton.padding(.trailing, 6)
                     contentModeButton
-                }
+                }   
+                .padding(.bottom, 8)
             }
-            .padding(.bottom, 8)
 #endif
 #endif
         }
