@@ -49,7 +49,7 @@ public struct KSVideoPlayerView: View {
     public var showDownloadSubtitle: Bool
     
     @State
-    public var isPreview: Bool = false
+    public var isPreview: Bool
 
     public init(url: URL, options: KSOptions, title: String? = nil, showDownloadSubtitle: Bool = false, isPreview: Bool = false) {
         self.init(coordinator: KSVideoPlayer.Coordinator(), url: url, options: options, title: title, subtitleDataSouce: nil, showDownloadSubtitle: showDownloadSubtitle, isPreview: isPreview)
