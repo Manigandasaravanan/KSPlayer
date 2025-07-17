@@ -11,6 +11,7 @@ import SwiftUI
 public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
     public static var onCloseVideoTapped: ((Int) -> Void)? = nil
+    public static var onOpenFullPreviewVideoTapped: (() -> Void)? = nil
 //    public static var onOpenChromecastTapped: (() -> Void)? = nil
 }
 
@@ -206,6 +207,7 @@ public struct KSVideoPlayerView: View {
         }
         #else
         .onTapGesture {
+            
                 playerCoordinator.isMaskShow.toggle()
             }
         #endif
@@ -246,6 +248,10 @@ public struct KSVideoPlayerView: View {
                 Color.black.opacity(0.3)
                     .edgesIgnoringSafeArea(.all)
                     .allowsHitTesting(false) // ✅ does NOT block taps
+                
+                if isPreview {
+                    openFullPreviewButton
+                }
             }
 
             VStack {
@@ -293,6 +299,30 @@ public struct KSVideoPlayerView: View {
         }
     }
 
+    private var openFullPreviewButton: some View {
+        Button(action: {
+            KSPlayerEventBus.onOpenFullPreviewVideoTapped?()
+        }) {
+            HStack(spacing: 0) {
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    Text("Watch")
+                        .font(.system(size: 24)) // Reduce icon size
+                        .foregroundColor(.white)
+                        .padding(8)
+                } else {
+                    Text("Watch")
+                        .font(Font(SubtitleModel.textFont))
+                        .foregroundColor(.white)
+                        .padding(8)
+                }
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.black.opacity(0.2)) // Transparent black background
+            )
+        }
+        .padding(.horizontal)
+    }
 
     private let overlayGradient = LinearGradient(
         stops: [
