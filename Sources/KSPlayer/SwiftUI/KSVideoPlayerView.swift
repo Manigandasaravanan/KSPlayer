@@ -301,6 +301,7 @@ public struct KSVideoPlayerView: View {
 
     private var openFullPreviewButton: some View {
         Button(action: {
+            playerCoordinator.playerLayer?.stop()
             KSPlayerEventBus.onOpenFullPreviewVideoTapped?()
         }) {
             HStack(spacing: 0) {
