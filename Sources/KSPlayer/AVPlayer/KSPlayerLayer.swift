@@ -206,6 +206,8 @@ open class KSPlayerLayer: NSObject {
             firstPlayerType = KSOptions.firstPlayerType
         }
         player = firstPlayerType.init(url: url, options: options)
+        KSLog("options.startPlayTime \(options.startPlayTime)")
+        shouldSeekTo = options.startPlayTime
         self.isAutoPlay = isAutoPlay
         super.init()
         player.playbackRate = options.startPlayRate
@@ -215,10 +217,7 @@ open class KSPlayerLayer: NSObject {
         player.delegate = self
         player.contentMode = .scaleAspectFit
         if isAutoPlay {
-//            player.currentPlaybackTime
             prepareToPlay()
-            KSLog("options.startPlayTime \(options.startPlayTime)")
-            shouldSeekTo = options.startPlayTime
         }
         #if canImport(UIKit)
         runOnMainThread { [weak self] in
