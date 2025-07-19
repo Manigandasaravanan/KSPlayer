@@ -46,6 +46,24 @@ enum KSVideoPlayerViewBuilder {
 //            Image(systemName: config.isScaleAspectFill ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward")
         }
     }
+    
+    @MainActor
+    static func chromecastButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
+        Button {
+            config.isScaleAspectFill.toggle()
+        } label: {
+            Image("chrome-cast", bundle: .module)
+                .renderingMode(.template)
+                .foregroundStyle(Color.white)
+                .font(.system(size: isIPad ? 24 : 18)) // Reduce icon size
+                .padding(8)
+                .background(
+                    Circle()
+                        .fill(Color.black.opacity(0.5)) // Black transparent background
+                )
+//            Image(systemName: config.isScaleAspectFill ? "rectangle.arrowtriangle.2.inward" : "rectangle.arrowtriangle.2.outward")
+        }
+    }
 
     @MainActor
     static func subtitleButton(config: KSVideoPlayer.Coordinator, isIPad: Bool = false) -> some View {
