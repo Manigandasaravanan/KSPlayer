@@ -12,7 +12,7 @@ public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
     public static var onCloseVideoTapped: ((Int) -> Void)? = nil
     public static var onOpenFullPreviewVideoTapped: (() -> Void)? = nil
-    public static var onOpenChromecastTapped: (() -> Void)? = nil
+//    public static var onOpenChromecastTapped: (() -> Void)? = nil
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
@@ -249,9 +249,9 @@ public struct KSVideoPlayerView: View {
                     .edgesIgnoringSafeArea(.all)
                     .allowsHitTesting(false) // ✅ does NOT block taps
                 
-                if isPreview {
-                    openFullPreviewButton
-                }
+//                if isPreview {
+//                    openFullPreviewButton
+//                }
             }
 
             VStack {
@@ -299,31 +299,31 @@ public struct KSVideoPlayerView: View {
         }
     }
 
-    private var openFullPreviewButton: some View {
-        Button(action: {
-            playerCoordinator.playerLayer?.stop()
-            KSPlayerEventBus.onOpenFullPreviewVideoTapped?()
-        }) {
-            HStack(spacing: 0) {
-                if UIDevice.current.userInterfaceIdiom == .pad {
-                    Text("Watch")
-                        .font(.system(size: 24)) // Reduce icon size
-                        .foregroundColor(.white)
-                        .padding(8)
-                } else {
-                    Text("Watch")
-                        .font(Font(SubtitleModel.textFont))
-                        .foregroundColor(.white)
-                        .padding(8)
-                }
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.black.opacity(0.2)) // Transparent black background
-            )
-        }
-        .padding(.horizontal)
-    }
+//    private var openFullPreviewButton: some View {
+//        Button(action: {
+//            playerCoordinator.playerLayer?.stop()
+//            KSPlayerEventBus.onOpenFullPreviewVideoTapped?()
+//        }) {
+//            HStack(spacing: 0) {
+//                if UIDevice.current.userInterfaceIdiom == .pad {
+//                    Text("Watch")
+//                        .font(.system(size: 24)) // Reduce icon size
+//                        .foregroundColor(.white)
+//                        .padding(8)
+//                } else {
+//                    Text("Watch")
+//                        .font(Font(SubtitleModel.textFont))
+//                        .foregroundColor(.white)
+//                        .padding(8)
+//                }
+//            }
+//            .background(
+//                RoundedRectangle(cornerRadius: 8)
+//                    .fill(Color.black.opacity(0.2)) // Transparent black background
+//            )
+//        }
+//        .padding(.horizontal)
+//    }
 
     private let overlayGradient = LinearGradient(
         stops: [
@@ -518,7 +518,7 @@ struct VideoControllerView: View {
                             .glassBackgroundEffect()
 #endif
                     }
-                    chromecaseButton.padding(.trailing, 6)
+//                    chromecaseButton.padding(.trailing, 6)
                     AirPlayView()
                         .fixedSize()
                         .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
