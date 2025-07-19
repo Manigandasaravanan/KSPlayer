@@ -630,22 +630,22 @@ struct VideoControllerView: View {
 //        #endif
 //    }
     
-    private var chromecaseButton: some View {
-        Button(action: {
-            KSPlayerEventBus.onOpenChromecastTapped?()
-        }) {
-            Image("chrome-cast", bundle: .module)
-                .renderingMode(.template)
-                .foregroundStyle(Color.white)
-                .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 18 : 18)) // Reduce icon size
-                .padding(8) // Adjust padding to keep the circle neat
-                .background(
-                    Circle()
-                        .fill(Color.black.opacity(0.5)) // Black transparent background
-                )
-        }
-        .padding(.horizontal)
-    }
+//    private var chromecaseButton: some View {
+//        Button(action: {
+//            KSPlayerEventBus.onOpenChromecastTapped?()
+//        }) {
+//            Image("chrome-cast", bundle: .module)
+//                .renderingMode(.template)
+//                .foregroundStyle(Color.white)
+//                .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 18 : 18)) // Reduce icon size
+//                .padding(8) // Adjust padding to keep the circle neat
+//                .background(
+//                    Circle()
+//                        .fill(Color.black.opacity(0.5)) // Black transparent background
+//                )
+//        }
+//        .padding(.horizontal)
+//    }
 
     private var contentModeButton: some View {
         KSVideoPlayerViewBuilder.contentModeButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad)
