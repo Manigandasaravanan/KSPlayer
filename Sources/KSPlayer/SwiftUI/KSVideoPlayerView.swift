@@ -192,17 +192,19 @@ public struct KSVideoPlayerView: View {
             playerCoordinator.playerLayer?.player.view?.exitFullScreenMode()
         }
         .onMoveCommand { direction in
-            switch direction {
-            case .left:
-                playerCoordinator.skip(interval: -15)
-            case .right:
-                playerCoordinator.skip(interval: 15)
-            case .up:
-                playerCoordinator.playerLayer?.player.playbackVolume += 0.2
-            case .down:
-                playerCoordinator.playerLayer?.player.playbackVolume -= 0.2
-            @unknown default:
-                break
+            if !isPreview {
+                switch direction {
+                case .left:
+                    playerCoordinator.skip(interval: -15)
+                case .right:
+                    playerCoordinator.skip(interval: 15)
+                case .up:
+                    playerCoordinator.playerLayer?.player.playbackVolume += 0.2
+                case .down:
+                    playerCoordinator.playerLayer?.player.playbackVolume -= 0.2
+                @unknown default:
+                    break
+                }
             }
         }
         #else
@@ -250,7 +252,9 @@ public struct KSVideoPlayerView: View {
                     .allowsHitTesting(false) // ✅ does NOT block taps
                 
                 if isPreview {
+#if os(iOS)
                     openFullPreviewButton
+#endif
                 }
             }
 
