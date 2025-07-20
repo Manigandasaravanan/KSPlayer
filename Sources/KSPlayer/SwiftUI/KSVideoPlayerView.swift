@@ -453,41 +453,43 @@ struct VideoControllerView: View {
                     .opacity(config.state == .buffering ? 1 : 0)
                 Spacer()
                     .layoutPriority(2)
-                Button {
-                    isDowloadSubtitleFocused = false
-                    KSPlayerEventBus.onLoadSubtitleTapped?()
-                } label: {
-                    Text("🌐︎ Download subtitle")
-                        .font(.caption)
-                        .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
-                        .padding(8)
-                        .frame(width: 300)
-                }
-                .focused($isDowloadSubtitleFocused)
-                
-                HStack {
+                if !isPreview {
                     Button {
-                        if config.state.isPlaying {
-                            config.playerLayer?.pause()
-                        } else {
-                            config.playerLayer?.play()
-                        }
+                        isDowloadSubtitleFocused = false
+                        KSPlayerEventBus.onLoadSubtitleTapped?()
                     } label: {
-                        Image(systemName: config.state == .error ? "play.slash.fill" :
-                                (config.state.isPlaying ? "pause.fill" : "play.fill"))
-                        .font(.caption)
-                        .padding(8)
+                        Text("🌐︎ Download subtitle")
+                            .font(.caption)
+                            .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
+                            .padding(8)
+                            .frame(width: 300)
                     }
-                    .frame(width: 56)
+                    .focused($isDowloadSubtitleFocused)
                     
-                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                        audioButton(audioTracks: audioTracks)
+                    HStack {
+                        Button {
+                            if config.state.isPlaying {
+                                config.playerLayer?.pause()
+                            } else {
+                                config.playerLayer?.play()
+                            }
+                        } label: {
+                            Image(systemName: config.state == .error ? "play.slash.fill" :
+                                    (config.state.isPlaying ? "pause.fill" : "play.fill"))
                             .font(.caption)
                             .padding(8)
+                        }
+                        .frame(width: 56)
+                        
+                        if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                            audioButton(audioTracks: audioTracks)
+                                .font(.caption)
+                                .padding(8)
+                        }
+                        
+                        muteButton.frame(width: 56)
+                        subtitleButton
                     }
-                    
-                    muteButton.frame(width: 56)
-                    subtitleButton
                 }
             }
 #else // non-tvOS
