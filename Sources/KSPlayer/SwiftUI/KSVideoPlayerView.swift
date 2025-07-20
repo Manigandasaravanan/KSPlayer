@@ -215,18 +215,20 @@ public struct KSVideoPlayerView: View {
         #endif
         #if os(tvOS)
             .onMoveCommand { direction in
-            switch direction {
-            case .left:
-                playerCoordinator.skip(interval: -15)
-            case .right:
-                playerCoordinator.skip(interval: 15)
-            case .up:
-                playerCoordinator.mask(show: true, autoHide: false)
-            case .down:
-                focusableField = .info
-            @unknown default:
-                break
-            }
+                if !isPreview {
+                    switch direction {
+                    case .left:
+                        playerCoordinator.skip(interval: -15)
+                    case .right:
+                        playerCoordinator.skip(interval: 15)
+                    case .up:
+                        playerCoordinator.mask(show: true, autoHide: false)
+                    case .down:
+                        focusableField = .info
+                    @unknown default:
+                        break
+                    }
+                }
         }
         #else
         .onHover { _ in
