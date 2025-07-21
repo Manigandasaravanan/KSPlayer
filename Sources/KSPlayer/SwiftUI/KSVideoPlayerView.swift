@@ -477,9 +477,9 @@ struct VideoControllerView: View {
                                 .font(.caption)
                                 .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
                                 .padding(8)
-                                .frame(width: 300)
                         }
                         .focused($isDowloadSubtitleFocused)
+                        .frame(width: 300)
                         
                         if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                             audioButton(audioTracks: audioTracks)
