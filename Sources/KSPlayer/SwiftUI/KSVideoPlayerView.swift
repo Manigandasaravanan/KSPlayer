@@ -225,6 +225,7 @@ public struct KSVideoPlayerView: View {
                         playerCoordinator.mask(show: true, autoHide: false)
                     case .down:
 //                        focusableField = .info
+                        break
                     @unknown default:
                         break
                     }
