@@ -466,7 +466,7 @@ struct VideoControllerView: View {
                             Image(systemName: config.state == .error ? "play.slash.fill" :
                                     (config.state.isPlaying ? "pause.fill" : "play.fill"))
                             .font(.caption)
-                            .padding(8)
+                            .padding(6)
                         }
                         .frame(width: 56)
                         
@@ -477,7 +477,7 @@ struct VideoControllerView: View {
                             Text("🌐︎ Download subtitle")
                                 .font(.caption)
                                 .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
-                                .padding(8)
+                                .padding(6)
                         }
                         .focused($isDowloadSubtitleFocused)
                         .frame(width: 340)
