@@ -476,7 +476,7 @@ struct VideoControllerView: View {
                             Text("🌐︎ Download subtitle")
                                 .font(.caption)
                                 .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
-                                .padding(8)
+//                                .padding(8)
                         }
                         .focused($isDowloadSubtitleFocused)
                         .frame(width: 300)
