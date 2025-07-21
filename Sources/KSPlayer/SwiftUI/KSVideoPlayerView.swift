@@ -480,7 +480,7 @@ struct VideoControllerView: View {
                                 .padding(8)
                         }
                         .focused($isDowloadSubtitleFocused)
-                        .frame(width: 320)
+                        .frame(width: 340)
                         
                         if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                             audioButton(audioTracks: audioTracks)
