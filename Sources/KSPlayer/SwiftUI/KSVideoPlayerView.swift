@@ -454,18 +454,6 @@ struct VideoControllerView: View {
                 Spacer()
                     .layoutPriority(2)
                 if !isPreview {
-                    Button {
-                        isDowloadSubtitleFocused = false
-                        KSPlayerEventBus.onLoadSubtitleTapped?()
-                    } label: {
-                        Text("🌐︎ Download subtitle")
-                            .font(.caption)
-                            .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
-                            .padding(8)
-                            .frame(width: 300)
-                    }
-                    .focused($isDowloadSubtitleFocused)
-                    
                     HStack {
                         Button {
                             if config.state.isPlaying {
@@ -480,6 +468,18 @@ struct VideoControllerView: View {
                             .padding(8)
                         }
                         .frame(width: 56)
+                        
+                        Button {
+                            isDowloadSubtitleFocused = false
+                            KSPlayerEventBus.onLoadSubtitleTapped?()
+                        } label: {
+                            Text("🌐︎ Download subtitle")
+                                .font(.caption)
+                                .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
+                                .padding(8)
+                                .frame(width: 300)
+                        }
+                        .focused($isDowloadSubtitleFocused)
                         
                         if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                             audioButton(audioTracks: audioTracks)
