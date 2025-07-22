@@ -527,7 +527,7 @@ struct VideoControllerView: View {
                             .glassBackgroundEffect()
 #endif
                     }
-//                    chromecaseButton.padding(.trailing, 6)
+                    chromecaseButton.padding(.trailing, 6)
                     AirPlayView()
                         .fixedSize()
                         .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
