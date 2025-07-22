@@ -12,7 +12,7 @@ public class KSPlayerEventBus {
     public static var onLoadSubtitleTapped: (() -> Void)? = nil
     public static var onCloseVideoTapped: ((Int) -> Void)? = nil
     public static var onOpenFullPreviewVideoTapped: (() -> Void)? = nil
-//    public static var onOpenChromecastTapped: (() -> Void)? = nil
+    public static var onOpenChromecastTapped: (() -> Void)? = nil
 }
 
 @available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
@@ -654,7 +654,7 @@ struct VideoControllerView: View {
 //                )
 //        }
 //        .padding(.horizontal)
-//    }
+//    }s
 
     private var contentModeButton: some View {
         KSVideoPlayerViewBuilder.contentModeButton(config: config, isIPad: UIDevice.current.userInterfaceIdiom == .pad)
