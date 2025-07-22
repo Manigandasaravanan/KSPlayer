@@ -520,14 +520,14 @@ struct VideoControllerView: View {
                 if !isPreview {
                     if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                         audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
-                            .padding(.trailing, 6)
+                            
                         
 #if os(xrOS)
                             .aspectRatio(1, contentMode: .fit)
                             .glassBackgroundEffect()
 #endif
                     }
-                    chromecaseButton.padding(.trailing, 6)
+                    chromecaseButton
                     AirPlayView()
                         .fixedSize()
                         .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
