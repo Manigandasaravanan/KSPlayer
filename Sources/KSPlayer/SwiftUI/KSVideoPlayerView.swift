@@ -528,12 +528,17 @@ struct VideoControllerView: View {
 #endif
                     }
                     chromecaseButton
-                    if UIDevice.current.userInterfaceIdiom == .vision {
-                        AirPlayView()
+                    if #available(iOS 17.0, *) {
+                        if UIDevice.current.userInterfaceIdiom == .vision {
+                            AirPlayView()
+                        } else {
+                            AirPlayView()
+                                .fixedSize()
+                                .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
+                        }
                     } else {
+                        // Fallback on earlier versions
                         AirPlayView()
-                            .fixedSize()
-                            .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
                     }
                 }
             }
