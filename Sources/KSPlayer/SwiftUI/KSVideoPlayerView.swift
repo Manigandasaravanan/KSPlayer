@@ -531,6 +531,7 @@ struct VideoControllerView: View {
                     if #available(iOS 17.0, *) {
                         if UIDevice.current.userInterfaceIdiom == .vision {
                             AirPlayView()
+                                .fixedSize()
                         } else {
                             AirPlayView()
                                 .fixedSize()
@@ -539,6 +540,7 @@ struct VideoControllerView: View {
                     } else {
                         // Fallback on earlier versions
                         AirPlayView()
+                            .fixedSize()
                     }
                 }
             }
