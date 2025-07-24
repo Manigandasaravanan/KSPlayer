@@ -532,6 +532,7 @@ struct VideoControllerView: View {
                         if UIDevice.current.userInterfaceIdiom == .vision {
                             AirPlayView()
                                 .fixedSize()
+                                .aspectRatio(1, contentMode: .fit)
                         } else {
                             AirPlayView()
                                 .fixedSize()
@@ -541,6 +542,7 @@ struct VideoControllerView: View {
                         // Fallback on earlier versions
                         AirPlayView()
                             .fixedSize()
+                            .aspectRatio(1, contentMode: .fit)
                     }
                 }
             }
