@@ -278,6 +278,7 @@ open class VideoPlayerView: PlayerView {
         super.player(layer: layer, state: state)
         switch state {
         case .readyToPlay:
+            controllerView.isHidden = false
             toolBar.timeSlider.isPlayable = true
             toolBar.videoSwitchButton.isHidden = layer.player.tracks(mediaType: .video).count < 2
             toolBar.audioSwitchButton.isHidden = layer.player.tracks(mediaType: .audio).count < 2
@@ -300,11 +301,13 @@ open class VideoPlayerView: PlayerView {
             }
         case .buffering:
             isPlayed = true
+            controllerView.isHidden = true
             replayButton.isHidden = true
             replayButton.isSelected = false
             showLoader()
         case .bufferFinished:
             isPlayed = true
+            controllerView.isHidden = false
             replayButton.isHidden = true
             replayButton.isSelected = false
             hideLoader()

@@ -180,6 +180,7 @@ open class KSPlayerLayer: NSObject {
         if self.player.playbackState == .playing, self.player.loadState == .playable, self.state == .buffering {
             // 一个兜底保护，正常不能走到这里
             self.state = .bufferFinished
+            self.player.play()
         }
         if self.player.isPlaying {
             MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = self.player.currentPlaybackTime
