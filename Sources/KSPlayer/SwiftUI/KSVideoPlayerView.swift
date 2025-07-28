@@ -451,12 +451,12 @@ struct VideoControllerView: View {
                     .lineLimit(2)
                     .layoutPriority(3)
                 ProgressView()
-                    .opacity(config.state == .buffering ? 1 : 0)
+                    .opacity(config.state == .buffering || config.state == .preparing ? 1 : 0)
                 Spacer()
                     .layoutPriority(2)
                 if !isPreview {
                     HStack {
-                        if config.state != .buffering {
+                        if config.state == .readyToPlay || config.state == .paused {
                             Button {
                                 if config.state.isPlaying {
                                     config.playerLayer?.pause()
@@ -521,7 +521,7 @@ struct VideoControllerView: View {
                     
 #endif
                 if !isPreview {
-                    if config.state != .buffering {
+                    if config.state == .readyToPlay || config.state == .paused {
                         if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                             audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
                             
@@ -554,7 +554,7 @@ struct VideoControllerView: View {
             
 #if !os(xrOS)
             if !isPreview {
-                if config.state != .buffering {
+                if config.state == .readyToPlay || config.state == .paused {
                     KSVideoPlayerViewBuilder.playbackControlView(
                         config: config,
                         isIPad: UIDevice.current.userInterfaceIdiom == .pad
