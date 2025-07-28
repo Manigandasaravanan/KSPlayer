@@ -456,40 +456,43 @@ struct VideoControllerView: View {
                     .layoutPriority(2)
                 if !isPreview {
                     HStack {
-                        Button {
-                            if config.state.isPlaying {
-                                config.playerLayer?.pause()
-                            } else {
-                                config.playerLayer?.play()
-                            }
-                        } label: {
-                            Image(systemName: config.state == .error ? "play.slash.fill" :
-                                    (config.state.isPlaying ? "pause.fill" : "play.fill"))
-                            .font(.caption)
-                            .padding(6)
-                        }
-                        .frame(width: 56)
-                        
-                        Button {
-                            isDowloadSubtitleFocused = false
-                            KSPlayerEventBus.onLoadSubtitleTapped?()
-                        } label: {
-                            Text("🌐︎ Download subtitle")
+                        if config.state != .buffering {
+                            Button {
+                                if config.state.isPlaying {
+                                    config.playerLayer?.pause()
+                                } else {
+                                    config.playerLayer?.play()
+                                }
+                            } label: {
+                                Image(systemName: config.state == .error ? "play.slash.fill" :
+                                        (config.state.isPlaying ? "pause.fill" : "play.fill"))
                                 .font(.caption)
-                                .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
                                 .padding(6)
+                            }
+                            .frame(width: 56)
+                            
+                            
+                            Button {
+                                isDowloadSubtitleFocused = false
+                                KSPlayerEventBus.onLoadSubtitleTapped?()
+                            } label: {
+                                Text("🌐︎ Download subtitle")
+                                    .font(.caption)
+                                    .foregroundColor(isDowloadSubtitleFocused ? .black : .white)
+                                    .padding(6)
+                            }
+                            .focused($isDowloadSubtitleFocused)
+                            .frame(width: 340)
+                            
+                            if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                                audioButton(audioTracks: audioTracks)
+                                    .font(.caption)
+                                    .padding(8)
+                            }
+                            
+                            muteButton.frame(width: 56)
+                            subtitleButton
                         }
-                        .focused($isDowloadSubtitleFocused)
-                        .frame(width: 340)
-                        
-                        if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                            audioButton(audioTracks: audioTracks)
-                                .font(.caption)
-                                .padding(8)
-                        }
-                        
-                        muteButton.frame(width: 56)
-                        subtitleButton
                     }
                 }
             }
@@ -518,29 +521,31 @@ struct VideoControllerView: View {
                     
 #endif
                 if !isPreview {
-                    if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
-                        audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
+                    if config.state != .buffering {
+                        if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
+                            audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
                             
-                        
+                            
 #if os(xrOS)
-                            .aspectRatio(1, contentMode: .fit)
-                            .glassBackgroundEffect()
+                                .aspectRatio(1, contentMode: .fit)
+                                .glassBackgroundEffect()
 #endif
-                    }
-                    chromecaseButton
-                    if #available(iOS 17.0, *) {
-                        if UIDevice.current.userInterfaceIdiom == .vision {
-                            AirPlayView()
-                                .fixedSize()
-                        } else {
-                            AirPlayView()
-                                .fixedSize()
-                                .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
                         }
-                    } else {
-                        // Fallback on earlier versions
-                        AirPlayView()
-                            .frame(width: 44, height: 44)
+                        chromecaseButton
+                        if #available(iOS 17.0, *) {
+                            if UIDevice.current.userInterfaceIdiom == .vision {
+                                AirPlayView()
+                                    .fixedSize()
+                            } else {
+                                AirPlayView()
+                                    .fixedSize()
+                                    .scaleEffect(UIDevice.current.userInterfaceIdiom == .pad ? 1.2 : 1.0)
+                            }
+                        } else {
+                            // Fallback on earlier versions
+                            AirPlayView()
+                                .frame(width: 44, height: 44)
+                        }
                     }
                 }
             }
@@ -549,22 +554,24 @@ struct VideoControllerView: View {
             
 #if !os(xrOS)
             if !isPreview {
-                KSVideoPlayerViewBuilder.playbackControlView(
-                    config: config,
-                    isIPad: UIDevice.current.userInterfaceIdiom == .pad
-                )
-                Spacer()
-                
-                HStack(spacing: 0) {
-                    if showDownloadSubtitle {
-                        loadSubtitleButton
-                    }
+                if config.state != .buffering {
+                    KSVideoPlayerViewBuilder.playbackControlView(
+                        config: config,
+                        isIPad: UIDevice.current.userInterfaceIdiom == .pad
+                    )
                     Spacer()
-                    muteButton.padding(.trailing, 6)
-                    subtitleButton.padding(.trailing, 6)
-                    contentModeButton
-                }   
-                .padding(.bottom, 8)
+                    
+                    HStack(spacing: 0) {
+                        if showDownloadSubtitle {
+                            loadSubtitleButton
+                        }
+                        Spacer()
+                        muteButton.padding(.trailing, 6)
+                        subtitleButton.padding(.trailing, 6)
+                        contentModeButton
+                    }
+                    .padding(.bottom, 8)
+                }
             }
 #endif
 #endif
