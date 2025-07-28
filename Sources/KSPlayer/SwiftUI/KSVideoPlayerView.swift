@@ -456,7 +456,7 @@ struct VideoControllerView: View {
                     .layoutPriority(2)
                 if !isPreview {
                     HStack {
-                        if config.state == .readyToPlay || config.state == .paused {
+                        if config.state != .buffering || config.state != .preparing {
                             Button {
                                 if config.state.isPlaying {
                                     config.playerLayer?.pause()
@@ -521,7 +521,7 @@ struct VideoControllerView: View {
                     
 #endif
                 if !isPreview {
-                    if config.state == .readyToPlay || config.state == .paused {
+                    if config.state != .buffering || config.state != .preparing {
                         if let audioTracks = config.playerLayer?.player.tracks(mediaType: .audio), !audioTracks.isEmpty {
                             audioButton(audioTracks: audioTracks, isIpad: UIDevice.current.userInterfaceIdiom == .pad)
                             
@@ -554,7 +554,7 @@ struct VideoControllerView: View {
             
 #if !os(xrOS)
             if !isPreview {
-                if config.state == .readyToPlay || config.state == .paused {
+                if config.state != .buffering || config.state != .preparing {
                     KSVideoPlayerViewBuilder.playbackControlView(
                         config: config,
                         isIPad: UIDevice.current.userInterfaceIdiom == .pad

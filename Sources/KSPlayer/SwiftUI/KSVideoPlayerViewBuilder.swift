@@ -117,7 +117,7 @@ enum KSVideoPlayerViewBuilder {
                 .font(isIPad ? .title : .subheadline)
                 .foregroundStyle(Color.white)
             ProgressView()
-                .opacity(config.state == .buffering ? 1 : 0)
+                .opacity(config.state == .buffering || config.state == .preparing ? 1 : 0)
         }
     }
 
