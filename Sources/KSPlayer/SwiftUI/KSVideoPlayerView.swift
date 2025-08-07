@@ -271,7 +271,7 @@ public struct KSVideoPlayerView: View {
                     isPreview: $isPreview
                 )
     #if !os(xrOS)
-                if playerCoordinator.isMaskShow {
+                if playerCoordinator.isMaskShow && showDownloadSubtitle {
                     VideoTimeShowView(config: playerCoordinator, model: playerCoordinator.timemodel)
                         .onAppear { focusableField = .controller }
                         .onDisappear { focusableField = .play }
@@ -454,7 +454,7 @@ struct VideoControllerView: View {
                     .opacity(config.state == .buffering || config.state == .preparing ? 1 : 0)
                 Spacer()
                     .layoutPriority(2)
-                if !isPreview {
+                if !isPreview && showDownloadSubtitle {
                     HStack {
                         if config.state != .buffering && config.state != .preparing {
                             Button {
@@ -553,7 +553,7 @@ struct VideoControllerView: View {
             Spacer()
             
 #if !os(xrOS)
-            if !isPreview {
+            if !isPreview && showDownloadSubtitle {
                 if config.state != .buffering && config.state != .preparing {
                     KSVideoPlayerViewBuilder.playbackControlView(
                         config: config,
