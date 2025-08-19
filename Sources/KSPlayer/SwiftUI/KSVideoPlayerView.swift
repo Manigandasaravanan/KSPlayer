@@ -15,7 +15,7 @@ public class KSPlayerEventBus {
     public static var onOpenChromecastTapped: (() -> Void)? = nil
 }
 
-@available(iOS 16.0, macOS 13.0, tvOS 16.0, *)
+@available(iOS 16.0, macOS 13.0, tvOS 15.0, *)
 @MainActor
 public struct KSVideoPlayerView: View {
     private let subtitleDataSouce: SubtitleDataSouce?
